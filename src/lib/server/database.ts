@@ -24,7 +24,7 @@ export async function getSong(id: string): Promise<Song | null> {
 			'SELECT songs.title, authors.name AS author, songs.lyrics, songs.chords FROM songs JOIN authors ON songs.author_id = authors.id WHERE songs.id = ?;'
 		);
 		const [[result]] = (await stm.execute([id])) as unknown as Song[][];
-		return result;
+		return result ?? null;
 	} catch (error) {
 		console.error(error);
 		return null;
