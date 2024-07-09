@@ -2,13 +2,24 @@
 	export let data;
 </script>
 
-<h1>Hello World! :3</h1>
+<header>
+	<h1>Hello World! :3</h1>
+</header>
 
-{#each data.songs as song}
-	<a href="/song/{song.id}" class="song">
-		{song.title} - {song.author}
-	</a>
-{/each}
+<nav>
+	<h2>Menu</h2>
+	<a href="/song/add">Add Song</a>
+</nav>
+
+<main>
+	<h2>Songs</h2>
+
+	{#each data.songs as song}
+		<a href="/song/{song.id}" class="song">
+			{song.title} - {song.author}
+		</a>
+	{/each}
+</main>
 
 <style>
 	.song {
