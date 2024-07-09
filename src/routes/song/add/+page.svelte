@@ -6,25 +6,25 @@
 
 <a href="/">Home</a>
 
-<form action="post">
+<form method="POST" action="/song/add">
 	<div class="field">
 		<label for="title">Title:</label>
-		<input type="text" name="title" id="title" />
+		<input type="text" name="title" id="title" required maxlength="256" />
 	</div>
 
 	<div class="field">
 		<label for="author">Author:</label>
-		<input type="text" name="author" id="author" />
+		<input type="text" name="author" id="author" required maxlength="256" />
 	</div>
 
 	<div class="main">
 		<div class="txField">
-			<label for="lirycs">Lirycs:</label>
-			<ResizableTextarea name={'lirycs'} id={'lirycs'} cols={60} rows={20} />
+			<label for="lyrics">Lyrics:</label>
+			<ResizableTextarea name={'lyrics'} id={'lyrics'} cols={60} rows={20} required={true} />
 		</div>
 		<div class="txField">
 			<label for="chords">Chords:</label>
-			<ResizableTextarea name={'chords'} id={'chords'} cols={20} rows={20} />
+			<ResizableTextarea name={'chords'} id={'chords'} cols={20} rows={20} required={true} />
 		</div>
 	</div>
 

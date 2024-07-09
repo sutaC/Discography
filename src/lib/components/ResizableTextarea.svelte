@@ -4,6 +4,7 @@
 	export let value: string = '';
 	export let cols: number = 5;
 	export let rows: number = 5;
+	export let required: boolean = false;
 	let textarea: HTMLTextAreaElement | undefined;
 
 	// Auto resize
@@ -13,7 +14,7 @@
 	}
 </script>
 
-<textarea {name} {id} {cols} {rows} bind:value bind:this={textarea}></textarea>
+<textarea {name} {id} {cols} {rows} {required} bind:value bind:this={textarea}></textarea>
 
 <style>
 	textarea {
