@@ -3,6 +3,8 @@
 	export let data: PageData;
 </script>
 
+<a href="/">Home</a>
+
 <h1>{data.title} - {data.author}</h1>
 
 <small>{data.id}</small>

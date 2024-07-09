@@ -5,6 +5,6 @@ import { error } from '@sveltejs/kit';
 
 export const load: PageServerLoad<Song> = async ({ params }) => {
 	const song = await getSong(params.id);
-	if (song === null) error(404, { message: 'Not found' });
+	if (!song) error(404, { message: 'Not found' });
 	return song;
 };
