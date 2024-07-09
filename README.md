@@ -4,45 +4,31 @@ Web app for songs lirycs and chords
 
 > Author: [sutaC](https://github.com/sutaC)
 
+## Technologies
+
+- SvelteKit
+- Typescript
+- Docker
+- Mysql
+
 ## Developing
 
-Once you've got this project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+To create developing version:
 
 ```bash
-npm run dev
-
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
+docker compose up
 ```
+
+Connect with `127.0.0.1:5173`
 
 ## Building
 
-To create a production version of your app:
+To create a production version:
+
+> Checkout [docker-compose.yml](./docker-compose.yml) and switch required options commented by `dev` to `prod`
 
 ```bash
-npm run build
+docker compose up
 ```
 
-You can preview the production build with `npm run preview`.
-
-## Deploying
-
-To deploy build version of application:
-
-```bash
-npm run start
-```
-
-Then app will run using adapter-node
-
-## Enviroment file template
-
-Local deploy `.env` file template
-
-```.env
-DBHOST=localhost
-DBUSER=server
-DBPASSWORD=password
-DBNAME=discography
-PORT=3000
-```
+Connect with `127.0.0.1:3000`

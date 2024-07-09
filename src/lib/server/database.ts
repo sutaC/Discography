@@ -1,14 +1,14 @@
 import mysql from 'mysql2/promise';
-import { DBHOST, DBUSER, DBPASSWORD, DBNAME } from '$env/static/private';
+import { env } from '$env/dynamic/private';
 import type { Song } from '../types';
 
 async function createConnection() {
 	try {
 		return mysql.createConnection({
-			host: DBHOST,
-			user: DBUSER,
-			password: DBPASSWORD,
-			database: DBNAME
+			host: env.DBHOST,
+			user: env.DBUSER,
+			password: env.DBPASSWORD,
+			database: env.DBNAME
 		});
 	} catch (error) {
 		console.error(error);

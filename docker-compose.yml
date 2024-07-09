@@ -1,6 +1,32 @@
 version: '3.8'
-
+networks:
+  app-net:
+    driver: bridge
 services:
+  server:
+    restart: on-failure
+    build:
+      context: .
+      target: dev # Dev
+      # target: prod # Prod
+    environment:
+      - DBHOST=database
+      - DBUSER=server
+      - DBPASSWORD=password
+      - DBNAME=discography
+      - PORT=3000
+    volumes:
+      - .:/app
+      - /app/node_modules
+    ports:
+      - 5173:5173 # Dev
+      - 24678:24678 # Dev HMR
+      - 3000:3000 # Prod
+    depends_on:
+      - database
+    networks:
+      - app-net
+
   database:
     image: mysql:latest
     restart: always
@@ -13,6 +39,8 @@ services:
       - ./database/database.sql:/docker-entrypoint-initdb.d/database.sql
       - ./database/data:/var/lib/mysql
     ports:
-      - 3306:3306
+      - 3306:3306 # Dev
     expose:
       - 3306
+    networks:
+      - app-net
