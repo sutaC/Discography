@@ -5,6 +5,8 @@
 
 <h1>{data.title} - {data.author}</h1>
 
+<small>{data.id}</small>
+
 <div>
 	<p>Lyrisc</p>
 	<pre>{data.lyrics}</pre>
