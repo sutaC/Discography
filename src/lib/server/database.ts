@@ -177,3 +177,31 @@ export async function updateAuthor(author: Author): Promise<void> {
 		await con.end();
 	}
 }
+
+export async function deleteAuthor(id: number): Promise<void> {
+	const con = await createConnection();
+	if (!con) return;
+	await con.connect();
+	try {
+		const stmt = await con.prepare('DELETE FROM authors WHERE authors.id = ?;');
+		await stmt.execute([id]);
+	} catch (error) {
+		console.error(error);
+	} finally {
+		await con.end();
+	}
+}
+
+export async function deleteSong(id: number): Promise<void> {
+	const con = await createConnection();
+	if (!con) return;
+	await con.connect();
+	try {
+		const stmt = await con.prepare('DELETE FROM songs WHERE songs.id = ?;');
+		await stmt.execute([id]);
+	} catch (error) {
+		console.error(error);
+	} finally {
+		await con.end();
+	}
+}

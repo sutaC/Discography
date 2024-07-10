@@ -1,10 +1,18 @@
 <script lang="ts">
 	import type { PageData } from './$types';
 	export let data: PageData;
+
+	const handleDelete = async () => {
+		const isSure = confirm(`Are you sure you want to delete "${data.title}"?`);
+		if (!isSure) return;
+		await fetch(`/song/${data.id}/delete`, { method: 'POST' });
+		window.location.replace('/');
+	};
 </script>
 
 <a href="/">Home</a>
 <a href={`/song/${data.id}/edit`}>Edit</a>
+<button on:click|preventDefault={handleDelete}>Delete</button>
 
 <h1>{data.title} - <a href={`/author/${data.authorId}`}>{data.author}</a></h1>
 
