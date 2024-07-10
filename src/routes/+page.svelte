@@ -3,7 +3,7 @@
 </script>
 
 <header>
-	<h1>Hello World! :3</h1>
+	<h1>Discography</h1>
 </header>
 
 <nav>
