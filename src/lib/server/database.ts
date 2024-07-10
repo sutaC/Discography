@@ -146,3 +146,17 @@ export async function updateSong(song: Song): Promise<void> {
 		await con.end();
 	}
 }
+
+export async function updateAuthor(author: Author): Promise<void> {
+	const con = await createConnection();
+	if (!con) return;
+	await con.connect();
+	try {
+		const stmt = await con.prepare('UPDATE authors SET name = ? WHERE authors.id = ?;');
+		await stmt.execute([author.name, author.id]);
+	} catch (error) {
+		console.error(error);
+	} finally {
+		await con.end();
+	}
+}
