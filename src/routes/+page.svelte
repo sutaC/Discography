@@ -15,9 +15,11 @@
 	<section>
 		<h2>Songs</h2>
 		{#each data.songs as song}
-			<a href="/song/{song.id}" class="tag">
-				{song.title} - {song.author}
-			</a>
+			<div class="tag">
+				<a href="/song/{song.id}">{song.title}</a>
+				-
+				<a href="/author/{song.authorId}">{song.author}</a>
+			</div>
 		{/each}
 	</section>
 

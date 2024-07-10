@@ -6,7 +6,7 @@
 <a href="/">Home</a>
 <a href={`/song/${data.id}/edit`}>Edit</a>
 
-<h1>{data.title} - {data.author}</h1>
+<h1>{data.title} - <a href={`/author/${data.authorId}`}>{data.author}</a></h1>
 
 <main>
 	<div class="lyrics">
