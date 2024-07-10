@@ -21,7 +21,7 @@ services:
     ports:
       - 5173:5173 # Dev
       - 24678:24678 # Dev HMR
-      - 3000:3000 # Prod
+      # - 3000:3000 # Prod
     depends_on:
       - database
     networks:
