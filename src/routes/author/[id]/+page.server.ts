@@ -1,10 +1,11 @@
-import type { Author } from '$lib/types';
+import type { Author, Song, SongTag } from '$lib/types';
 import type { PageServerLoad } from './$types';
-import { getAuthor } from '$lib/server/database';
+import { getAllSongsByAuthor, getAuthor } from '$lib/server/database';
 import { error } from '@sveltejs/kit';
 
-export const load: PageServerLoad<Author> = async ({ params }) => {
+export const load: PageServerLoad<{ author: Author; songs: SongTag[] }> = async ({ params }) => {
 	const author = await getAuthor(Number.parseInt(params.id));
 	if (!author) error(404, { message: 'Not found' });
-	return author;
+	const songs = (await getAllSongsByAuthor(author.id)) ?? [];
+	return { author, songs };
 };
