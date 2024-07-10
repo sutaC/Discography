@@ -70,8 +70,6 @@ export async function getAllSongsByAuthor(id: number): Promise<SongTag[] | null>
 	}
 }
 
-// SELECT songs.id, songs.title, songs.author_id AS authorId, authors.name AS author FROM songs JOIN authors ON songs.author_id = authors.id WHERE songs.author_id = 1;
-
 export async function getAuthor(id: number): Promise<Author | null> {
 	const con = await createConnection();
 	if (!con) return null;

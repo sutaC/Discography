@@ -9,6 +9,7 @@
 <nav>
 	<h2>Menu</h2>
 	<a href="/song/add">Add Song</a>
+	<a href="/author/add">Add Author</a>
 </nav>
 
 <main>
