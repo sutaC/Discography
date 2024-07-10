@@ -1,60 +1,10 @@
 <script lang="ts">
 	import ResizableTextarea from '$lib/components/ResizableTextarea.svelte';
+	import SongForm from '$lib/components/SongForm.svelte';
 </script>
 
 <h1>Add Song</h1>
 
 <a href="/">Home</a>
 
-<form method="POST" action="/song/add">
-	<div class="field">
-		<label for="title">Title:</label>
-		<input type="text" name="title" id="title" required maxlength="256" />
-	</div>
-
-	<div class="field">
-		<label for="author">Author:</label>
-		<input type="text" name="author" id="author" required maxlength="256" />
-	</div>
-
-	<div class="main">
-		<div class="txField">
-			<label for="lyrics">Lyrics:</label>
-			<ResizableTextarea name={'lyrics'} id={'lyrics'} cols={60} rows={20} required={true} />
-		</div>
-		<div class="txField">
-			<label for="chords">Chords:</label>
-			<ResizableTextarea name={'chords'} id={'chords'} cols={20} rows={20} required={true} />
-		</div>
-	</div>
-
-	<button type="reset">Reset</button>
-	<button type="submit">Add</button>
-</form>
-
-<style>
-	form {
-		padding: 0.5rem;
-		margin: 0.5rem;
-		border: 1px solid #000;
-	}
-
-	.field {
-		margin: 0.5rem 0;
-	}
-
-	.main {
-		display: flex;
-		align-items: start;
-		gap: 0.5rem;
-	}
-
-	.txField {
-		display: flex;
-		flex-direction: column;
-	}
-
-	button {
-		margin: 0.5rem 0;
-	}
-</style>
+<SongForm method={'POST'} action={'/song/add'} />
