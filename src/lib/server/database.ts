@@ -68,6 +68,22 @@ export async function getAuthor(id: string): Promise<Author | null> {
 	}
 }
 
+export async function getAllAuthors(): Promise<Author[] | null> {
+	const con = await createConnection();
+	if (!con) return null;
+	await con.connect();
+	try {
+		const stmt = await con.prepare('SELECT * FROM authors');
+		const [result] = (await stmt.execute(null)) as unknown as Author[][];
+		return result ?? [];
+	} catch (error) {
+		console.error(error);
+		return null;
+	} finally {
+		await con.end();
+	}
+}
+
 export async function findAuthor(name: string): Promise<Author | null> {
 	const con = await createConnection();
 	if (!con) return null;

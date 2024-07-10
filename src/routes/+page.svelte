@@ -12,17 +12,27 @@
 </nav>
 
 <main>
-	<h2>Songs</h2>
+	<section>
+		<h2>Songs</h2>
+		{#each data.songs as song}
+			<a href="/song/{song.id}" class="tag">
+				{song.title} - {song.author}
+			</a>
+		{/each}
+	</section>
 
-	{#each data.songs as song}
-		<a href="/song/{song.id}" class="song">
-			{song.title} - {song.author}
-		</a>
-	{/each}
+	<section>
+		<h2>Authors</h2>
+		{#each data.authors as author}
+			<a href="/song/{author.id}" class="tag">
+				{author.name}
+			</a>
+		{/each}
+	</section>
 </main>
 
 <style>
-	.song {
+	.tag {
 		display: block;
 		border: 1px solid #000;
 		padding: 0.5rem;
