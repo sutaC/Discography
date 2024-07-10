@@ -1,8 +1,8 @@
 export interface SongTag {
 	id: number;
+	authorId: number;
 	title: string;
 	author: string;
-	authorId?: number;
 }
 
 export interface Song extends SongTag {

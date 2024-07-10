@@ -1,11 +1,11 @@
-import type { Song } from '$lib/types';
-import { error, fail } from '@sveltejs/kit';
-import type { Actions } from './$types';
-import { addAuthor, addSong, findAuthor, getSong } from '$lib/server/database';
+import type { Author, Song } from '$lib/types';
+import type { Actions, PageServerLoad } from './$types';
+import { addSong, getAllAuthors } from '$lib/server/database';
 
-function generateId(name: string): string {
-	return name.toLowerCase().replaceAll(/\s/gm, '-');
-}
+export const load: PageServerLoad<{ authors: Author[] }> = async () => {
+	const authors = (await getAllAuthors()) ?? [];
+	return { authors };
+};
 
 export const actions: Actions = {
 	default: async (event) => {
@@ -15,8 +15,8 @@ export const actions: Actions = {
 		const song: Song = {
 			id: 0, // A_I
 			title: (data.get('title') as string).trim(),
-			author: (data.get('author') as string).trim(),
-			authorId: 0, // TODO:
+			author: '',
+			authorId: Number.parseInt(data.get('author') as string),
 			chords: data.get('chords') as string,
 			lyrics: data.get('lyrics') as string
 		};

@@ -1,14 +1,17 @@
 <script lang="ts">
-	import type { Song } from '$lib/types';
+	import type { Author, Song } from '$lib/types';
 	import ResizableTextarea from './ResizableTextarea.svelte';
+
+	export let authors: Author[];
 
 	export let method: string = '';
 	export let action: string = '';
 	export let song: Song = {
+		id: 0,
 		title: '',
 		author: '',
 		chords: '',
-		id: '',
+		authorId: 0,
 		lyrics: ''
 	};
 </script>
@@ -21,14 +24,11 @@
 
 	<div class="field">
 		<label for="author">Author:</label>
-		<input
-			type="text"
-			name="author"
-			id="author"
-			bind:value={song.author}
-			required
-			maxlength="256"
-		/>
+		<select name="author" id="author" placeholder="Name..." value={song.authorId} required>
+			{#each authors as author}
+				<option value={author.id}>{author.name}</option>
+			{/each}
+		</select>
 	</div>
 
 	<div class="main">

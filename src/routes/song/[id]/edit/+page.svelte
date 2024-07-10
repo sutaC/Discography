@@ -6,8 +6,13 @@
 </script>
 
 <a href="/">Home</a>
-<a href={`/song/${data.id}`}>Song</a>
+<a href={`/song/${data.song.id}`}>Song</a>
 
 <h1>Edit song</h1>
 
-<SongForm method={'POST'} action={`/song/${data.id}/edit`} bind:song={data} />
+<SongForm
+	method={'POST'}
+	action={`/song/${data.song.id}/edit`}
+	song={data.song}
+	authors={data.authors}
+/>

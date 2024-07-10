@@ -22,7 +22,7 @@ export async function getSong(id: number): Promise<Song | null> {
 	await con.connect();
 	try {
 		const stmt = await con.prepare(
-			'SELECT songs.id, songs.title, authors.name AS author, songs.lyrics, songs.chords FROM songs JOIN authors ON songs.author_id = authors.id WHERE songs.id = ?;'
+			'SELECT songs.id, songs.title, authors.name AS author, songs.author_id AS authorId, songs.lyrics, songs.chords FROM songs JOIN authors ON songs.author_id = authors.id WHERE songs.id = ?;'
 		);
 		const [[result]] = (await stmt.execute([id])) as unknown as Song[][];
 		return result ?? null;
@@ -40,7 +40,7 @@ export async function getAllSongs(): Promise<SongTag[] | null> {
 	await con.connect();
 	try {
 		const stmt = await con.prepare(
-			'SELECT songs.id, songs.title, authors.name AS author FROM songs JOIN authors ON songs.author_id = authors.id;'
+			'SELECT songs.id, songs.title, songs.author_id AS authorId, authors.name AS author FROM songs JOIN authors ON songs.author_id = authors.id;'
 		);
 		const [result] = (await stmt.execute(null)) as unknown as SongTag[][];
 		return result ?? [];
@@ -105,8 +105,8 @@ export async function addAuthor(author: Author): Promise<void> {
 	if (!con) return;
 	await con.connect();
 	try {
-		const stmt = await con.prepare('INSERT INTO authors (id, name) VALUES (?, ?);');
-		await stmt.execute([author.id, author.name]);
+		const stmt = await con.prepare('INSERT INTO authors (id, name) VALUES (NULL, ?);');
+		await stmt.execute([author.name]);
 	} catch (error) {
 		console.error(error);
 	} finally {
@@ -122,7 +122,7 @@ export async function addSong(song: Song): Promise<void> {
 		const stmt = await con.prepare(
 			'INSERT INTO songs (id, title, lyrics, chords, author_id) VALUES (NULL, ?, ?, ?, ?);'
 		);
-		await stmt.execute([song.title, song.lyrics, song.chords, song.authorId ?? 0]);
+		await stmt.execute([song.title, song.lyrics, song.chords, song.authorId]);
 	} catch (error) {
 		console.error(error);
 	} finally {
@@ -135,11 +135,10 @@ export async function updateSong(song: Song): Promise<void> {
 	if (!con) return;
 	await con.connect();
 	try {
-		// TODO: update author
 		const stmt = await con.prepare(
-			'UPDATE songs SET title = ?, lyrics = ?, chords = ? WHERE songs.id = ?;'
+			'UPDATE songs SET title = ?, lyrics = ?, chords = ?, author_id = ? WHERE songs.id = ?;'
 		);
-		await stmt.execute([song.title, song.lyrics, song.chords, song.id]);
+		await stmt.execute([song.title, song.lyrics, song.chords, song.authorId, song.id]);
 	} catch (error) {
 		console.error(error);
 	} finally {
