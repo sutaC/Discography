@@ -8,3 +8,8 @@ export interface Song extends SongTag {
 	lyrics: string;
 	chords: string;
 }
+
+export interface Author {
+	id: string;
+	name: string;
+}
