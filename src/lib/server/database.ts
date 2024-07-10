@@ -16,7 +16,7 @@ async function createConnection() {
 	}
 }
 
-export async function getSong(id: string): Promise<Song | null> {
+export async function getSong(id: number): Promise<Song | null> {
 	const con = await createConnection();
 	if (!con) return null;
 	await con.connect();
@@ -52,7 +52,7 @@ export async function getAllSongs(): Promise<SongTag[] | null> {
 	}
 }
 
-export async function getAuthor(id: string): Promise<Author | null> {
+export async function getAuthor(id: number): Promise<Author | null> {
 	const con = await createConnection();
 	if (!con) return null;
 	await con.connect();
@@ -120,9 +120,9 @@ export async function addSong(song: Song): Promise<void> {
 	await con.connect();
 	try {
 		const stmt = await con.prepare(
-			'INSERT INTO songs (id, title, lyrics, chords, author_id) VALUES (?, ?, ?, ?, ?);'
+			'INSERT INTO songs (id, title, lyrics, chords, author_id) VALUES (NULL, ?, ?, ?, ?);'
 		);
-		await stmt.execute([song.id, song.title, song.lyrics, song.chords, song.author]);
+		await stmt.execute([song.title, song.lyrics, song.chords, song.authorId ?? 0]);
 	} catch (error) {
 		console.error(error);
 	} finally {

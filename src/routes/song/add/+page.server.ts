@@ -13,34 +13,16 @@ export const actions: Actions = {
 
 		const data = await event.request.formData();
 		const song: Song = {
-			id: '',
-			title: data.get('title') as string,
-			author: data.get('author') as string,
+			id: 0, // A_I
+			title: (data.get('title') as string).trim(),
+			author: (data.get('author') as string).trim(),
+			authorId: 0, // TODO:
 			chords: data.get('chords') as string,
 			lyrics: data.get('lyrics') as string
 		};
-		// TODO Validation
-		// Id generation
-		song.title = song.title.trim();
-		song.id = generateId(song.title);
-		const hasSong = (await getSong(song.id)) !== null;
-		if (hasSong) {
-			console.error('Already has song');
-			return fail(409, { message: 'Song with that title already exists' });
-		}
-		// Find author
-		const authorName = song.author.trim();
-		let author = await findAuthor(authorName);
-		if (author === null) {
-			// Add author
-			author = {
-				id: generateId(authorName),
-				name: authorName
-			};
-			addAuthor(author);
-		}
-		song.author = author.id;
-		// Add song
+		// TODO Input validation
+		// TODO: Author validation
+		// Adds song
 		await addSong(song);
 		console.log('added song');
 	}
