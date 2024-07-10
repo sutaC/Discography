@@ -1,5 +1,4 @@
 <script lang="ts">
-	import ResizableTextarea from '$lib/components/ResizableTextarea.svelte';
 	import SongForm from '$lib/components/SongForm.svelte';
 </script>
 

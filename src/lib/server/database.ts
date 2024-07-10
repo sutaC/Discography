@@ -113,3 +113,20 @@ export async function addSong(song: Song): Promise<void> {
 		await con.end();
 	}
 }
+
+export async function updateSong(song: Song): Promise<void> {
+	const con = await createConnection();
+	if (!con) return;
+	await con.connect();
+	try {
+		// TODO: update author
+		const stmt = await con.prepare(
+			'UPDATE songs SET title = ?, lyrics = ?, chords = ? WHERE songs.id = ?;'
+		);
+		await stmt.execute([song.title, song.lyrics, song.chords, song.id]);
+	} catch (error) {
+		console.error(error);
+	} finally {
+		await con.end();
+	}
+}
