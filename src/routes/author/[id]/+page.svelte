@@ -4,6 +4,6 @@
 </script>
 
 <a href="/">Home</a>
-<a href={`/song/${data.id}/edit`}>Edit</a>
+<a href={`/author/${data.id}/edit`}>Edit</a>
 
 <h1>{data.name}</h1>
