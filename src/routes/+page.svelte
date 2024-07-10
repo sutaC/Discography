@@ -24,7 +24,7 @@
 	<section>
 		<h2>Authors</h2>
 		{#each data.authors as author}
-			<a href="/song/{author.id}" class="tag">
+			<a href="/author/{author.id}" class="tag">
 				{author.name}
 			</a>
 		{/each}
