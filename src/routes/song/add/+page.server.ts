@@ -1,6 +1,7 @@
-import type { Author, Song } from '$lib/types';
+import type { Author, Song, SongTag } from '$lib/types';
 import type { Actions, PageServerLoad } from './$types';
-import { addSong, getAllAuthors } from '$lib/server/database';
+import { addSong, findSong, getAllAuthors, getSong } from '$lib/server/database';
+import { redirect } from '@sveltejs/kit';
 
 export const load: PageServerLoad<{ authors: Author[] }> = async () => {
 	const authors = (await getAllAuthors()) ?? [];
@@ -9,8 +10,6 @@ export const load: PageServerLoad<{ authors: Author[] }> = async () => {
 
 export const actions: Actions = {
 	default: async (event) => {
-		console.log('got req');
-
 		const data = await event.request.formData();
 		const song: Song = {
 			id: 0, // A_I
@@ -22,8 +21,8 @@ export const actions: Actions = {
 		};
 		// TODO Input validation
 		// TODO: Author validation
-		// Adds song
 		await addSong(song);
-		console.log('added song');
+		const { id } = (await findSong(song.title)) as SongTag;
+		redirect(303, `/song/${id}`);
 	}
 } satisfies Actions;

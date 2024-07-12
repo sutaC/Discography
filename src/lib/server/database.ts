@@ -118,6 +118,24 @@ export async function findAuthor(name: string): Promise<Author | null> {
 	}
 }
 
+export async function findSong(title: string): Promise<SongTag | null> {
+	const con = await createConnection();
+	if (!con) return null;
+	await con.connect();
+	try {
+		const stmt = await con.prepare(
+			'SELECT songs.id, songs.title, songs.author_id AS authorId, authors.name AS author FROM songs JOIN authors ON songs.author_id = authors.id WHERE songs.title LIKE ?;'
+		);
+		const [[result]] = (await stmt.execute([title])) as unknown as SongTag[][];
+		return result ?? null;
+	} catch (error) {
+		console.error(error);
+		return null;
+	} finally {
+		await con.end();
+	}
+}
+
 export async function addAuthor(author: Author): Promise<void> {
 	const con = await createConnection();
 	if (!con) return;
