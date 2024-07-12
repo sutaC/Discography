@@ -205,3 +205,21 @@ export async function deleteSong(id: number): Promise<void> {
 		await con.end();
 	}
 }
+
+export async function searchSongs(slug: string): Promise<SongTag[] | null> {
+	const con = await createConnection();
+	if (!con) return null;
+	await con.connect();
+	try {
+		const stmt = await con.prepare(
+			'SELECT songs.id, songs.title, songs.author_id AS authorId, authors.name AS author FROM songs JOIN authors ON songs.author_id = authors.id WHERE songs.title LIKE CONCAT("%", ?, "%") OR authors.name LIKE CONCAT("%", ?, "%") ORDER BY songs.title, authors.name;'
+		);
+		const [result] = (await stmt.execute([slug, slug])) as unknown as SongTag[][];
+		return result ?? [];
+	} catch (error) {
+		console.error(error);
+		return null;
+	} finally {
+		await con.end();
+	}
+}
