@@ -140,6 +140,12 @@ export default class Database {
 						login
 					]);
 				}
+			},
+			getBySession: async (session: string): Promise<User | null> => {
+				const res = await this.query<User>('SELECT * FROM users WHERE users.session = ?;', [
+					session
+				]);
+				return res[0] ?? null;
 			}
 		}
 	};
