@@ -26,6 +26,7 @@
 	<h2>Menu</h2>
 	<a href="/song/add">Add Song</a>
 	<a href="/author/add">Add Author</a>
+	<a href="/login">Login</a>
 </nav>
 
 <main>

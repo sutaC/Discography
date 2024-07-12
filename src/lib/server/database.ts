@@ -1,6 +1,6 @@
 import mysql from 'mysql2/promise';
 import { env } from '$env/dynamic/private';
-import type { Author, Song, SongTag } from '../types';
+import type { Author, Song, SongTag, User } from '../types';
 
 export default class Database {
 	private readonly config = {
@@ -124,6 +124,22 @@ export default class Database {
 			},
 			delete: async (id: number): Promise<void> => {
 				await this.query<void>('DELETE FROM authors WHERE authors.id = ?;', [id]);
+			}
+		},
+		user: {
+			get: async (login: string): Promise<User | null> => {
+				const res = await this.query<User>('SELECT * FROM users WHERE users.login = ?;', [login]);
+				return res[0] ?? null;
+			},
+			updateSession: async (login: string, session: string | null) => {
+				if (session === null) {
+					await this.query<void>('UPDATE users SET session = NULL WHERE users.login = ?;', [login]);
+				} else {
+					await this.query<void>('UPDATE users SET session = ? WHERE users.login = ?;', [
+						session,
+						login
+					]);
+				}
 			}
 		}
 	};

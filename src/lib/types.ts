@@ -14,3 +14,11 @@ export interface Author {
 	id: number;
 	name: string;
 }
+
+export interface User {
+	login: string;
+	password: string;
+	salt: string;
+	permissons: string;
+	session: string | null;
+}
