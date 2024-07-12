@@ -8,4 +8,11 @@
 	<nav>
 		<a href="/">Home</a>
 	</nav>
+	<form action="/logout" method="post"><button type="submit">Logout</button></form>
 </header>
+
+<style>
+	form {
+		margin: 1rem 0;
+	}
+</style>

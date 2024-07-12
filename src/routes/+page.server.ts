@@ -9,6 +9,6 @@ export const load: PageServerLoad<{ songs: SongTag[] }> = async (event) => {
 	const authors = await db.data.author.getAll();
 	await db.disconnect();
 
-	const isLogedIn = event.locals.user !== null;
+	const isLogedIn = !!event.locals.user;
 	return { songs, authors, isLogedIn };
 };

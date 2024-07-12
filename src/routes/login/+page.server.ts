@@ -1,7 +1,11 @@
 import { error, redirect } from '@sveltejs/kit';
-import type { Actions } from './$types';
+import type { Actions, PageServerLoad } from './$types';
 import Database from '$lib/server/database';
 import { hash } from '$lib/server/authentication';
+
+export const load: PageServerLoad = async (event) => {
+	if (!!event.locals.user) redirect(301, '/profile');
+};
 
 export const actions: Actions = {
 	default: async (event) => {
