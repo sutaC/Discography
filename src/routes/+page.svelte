@@ -24,7 +24,6 @@
 
 <nav>
 	<h2>Menu</h2>
-	<a href="/search">Search</a>
 	<a href="/song/add">Add Song</a>
 	<a href="/author/add">Add Author</a>
 </nav>
@@ -54,7 +53,9 @@
 </main>
 
 <style>
-	header {
+	header,
+	nav,
+	main {
 		text-align: center;
 	}
 
