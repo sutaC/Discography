@@ -24,9 +24,13 @@
 
 <nav>
 	<h2>Menu</h2>
+	{#if data.isLogedIn}
+		<a href="/profile">Profile</a>
+	{:else}
+		<a href="/login">Login</a>
+	{/if}
 	<a href="/song/add">Add Song</a>
 	<a href="/author/add">Add Author</a>
-	<a href="/login">Login</a>
 </nav>
 
 <main>

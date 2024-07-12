@@ -3,7 +3,7 @@ import Database from '$lib/server/database';
 import type { User } from '$lib/types';
 import type { Handle } from '@sveltejs/kit';
 
-const authURLs: string[] = ['/user'];
+const authURLs: string[] = ['/profile'];
 
 export const handle: Handle = async ({ event, resolve }) => {
 	const session = event.cookies.get('session');

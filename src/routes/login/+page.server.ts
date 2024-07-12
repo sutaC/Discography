@@ -44,6 +44,6 @@ export const actions: Actions = {
 			httpOnly: true
 		});
 
-		redirect(301, '/user');
+		redirect(301, '/profile');
 	}
 };

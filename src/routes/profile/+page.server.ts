@@ -1,5 +1,6 @@
 import type { PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async (event) => {
-	return { username: event.locals.user?.login };
+	const username = event.locals.user?.login as string;
+	return { username };
 };
