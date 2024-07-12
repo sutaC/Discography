@@ -3,6 +3,7 @@
 	export let data: PageData;
 
 	const handleDelete = async () => {
+		if (!data.permissions?.deleting) return;
 		const isSure = confirm(
 			`Are you sure you want to delete "${data.author.name}"? It will also remove all songs related to him!`
 		);
@@ -13,8 +14,12 @@
 </script>
 
 <a href="/">Home</a>
-<a href={`/author/${data.author.id}/edit`}>Edit</a>
-<button on:click|preventDefault={handleDelete}>Delete</button>
+{#if data.permissions?.updating}
+	<a href={`/author/${data.author.id}/edit`}>Edit</a>
+{/if}
+{#if data.permissions?.deleting}
+	<button on:click|preventDefault={handleDelete}>Delete</button>
+{/if}
 
 <h1>{data.author.name}</h1>
 

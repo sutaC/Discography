@@ -1,10 +1,9 @@
-import type { Author, Song, SongTag } from '$lib/types';
 import type { PageServerLoad } from './$types';
 import Database from '$lib/server/database';
 import { error } from '@sveltejs/kit';
 
-export const load: PageServerLoad<{ author: Author; songs: SongTag[] }> = async ({ params }) => {
-	const id = Number.parseInt(params.id);
+export const load: PageServerLoad = async (event) => {
+	const id = Number.parseInt(event.params.id);
 
 	const db = new Database();
 	await db.connect();
@@ -18,5 +17,5 @@ export const load: PageServerLoad<{ author: Author; songs: SongTag[] }> = async 
 	const songs = await db.data.song.getAllByAuthor(id);
 	await db.disconnect();
 
-	return { author, songs };
+	return { author, songs, permissions: event.locals.user?.permissions };
 };

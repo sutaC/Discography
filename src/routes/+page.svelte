@@ -24,13 +24,15 @@
 
 <nav>
 	<h2>Menu</h2>
-	{#if data.isLogedIn}
+	{#if !!data.permissions}
 		<a href="/profile">Profile</a>
 	{:else}
 		<a href="/login">Login</a>
 	{/if}
-	<a href="/song/add">Add Song</a>
-	<a href="/author/add">Add Author</a>
+	{#if data.permissions?.adding}
+		<a href="/song/add">Add Song</a>
+		<a href="/author/add">Add Author</a>
+	{/if}
 </nav>
 
 <main>

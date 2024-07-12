@@ -3,7 +3,7 @@ import type { Actions, PageServerLoad } from './$types';
 import Database from '$lib/server/database';
 import { redirect } from '@sveltejs/kit';
 
-export const load: PageServerLoad<{ authors: Author[] }> = async () => {
+export const load: PageServerLoad = async () => {
 	const db = new Database();
 	await db.connect();
 	const authors = await db.data.author.getAll();

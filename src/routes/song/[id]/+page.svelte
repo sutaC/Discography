@@ -4,9 +4,10 @@
 	export let data: PageData;
 
 	const handleDelete = async () => {
-		const isSure = confirm(`Are you sure you want to delete "${data.title}"?`);
+		if (!data.permissions?.deleting) return;
+		const isSure = confirm(`Are you sure you want to delete "${data.song.title}"?`);
 		if (!isSure) return;
-		await fetch(`/song/${data.id}/delete`, { method: 'POST' });
+		await fetch(`/song/${data.song.id}/delete`, { method: 'POST' });
 		window.location.replace('/');
 	};
 
@@ -16,23 +17,28 @@
 </script>
 
 <a href="/">Home</a>
-<a href={`/song/${data.id}/edit`}>Edit</a>
-<button on:click|preventDefault={handleDelete}>Delete</button>
+{#if data.permissions?.updating}
+	<a href={`/song/${data.song.id}/edit`}>Edit</a>
+{/if}
+{#if data.permissions?.deleting}
+	<button on:click|preventDefault={handleDelete}>Delete</button>
+{/if}
 <button on:click|preventDefault={handlePrint}>Print</button>
 
 <h1 class="print inline">
-	{data.title} - <a class="print inline" href={`/author/${data.authorId}`}>{data.author}</a>
+	{data.song.title} -
+	<a class="print inline" href={`/author/${data.song.authorId}`}>{data.song.author}</a>
 </h1>
 
 <main class="print flex">
 	<div class="lyrics">
 		<p class="print none">Lyrics:</p>
-		<pre>{data.lyrics}</pre>
+		<pre>{data.song.lyrics}</pre>
 	</div>
 
 	<div class="chords">
 		<p class="print none">Chords:</p>
-		<pre>{data.chords}</pre>
+		<pre>{data.song.chords}</pre>
 	</div>
 </main>
 

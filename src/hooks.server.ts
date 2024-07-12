@@ -3,7 +3,16 @@ import Database from '$lib/server/database';
 import type { User } from '$lib/types';
 import type { Handle } from '@sveltejs/kit';
 
-const authURLs: string[] = ['/profile', '/logout'];
+const authURLs: (string | RegExp)[] = [
+	'/profile',
+	'/logout',
+	'/song/add',
+	'/author/add',
+	/\/song\/\d*\/edit/, // '/song/[id]/edit'
+	/\/author\/\d*\/edit/, // '/author/[id]/edit'
+	/\/song\/\d*\/delete/, // '/song/[id]/delete'
+	/\/author\/\d*\/delete/ // '/author/[id]/delete'
+];
 
 export const handle: Handle = async ({ event, resolve }) => {
 	const session = event.cookies.get('session');
@@ -15,8 +24,7 @@ export const handle: Handle = async ({ event, resolve }) => {
 		user = await db.data.user.getBySession(session);
 		await db.disconnect();
 	}
-
-	const isAuthURL = authURLs.find((url) => event.url.pathname.includes(url));
+	const isAuthURL = authURLs.find((url) => event.url.pathname.match(url));
 	if (isAuthURL && !user) return new Response(null, { status: 401, statusText: 'Unauthorized' });
 
 	if (user)

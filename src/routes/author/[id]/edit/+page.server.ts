@@ -3,7 +3,7 @@ import type { PageServerLoad } from './$types';
 import Database from '$lib/server/database';
 import { error, type Actions } from '@sveltejs/kit';
 
-export const load: PageServerLoad<Author> = async ({ params }) => {
+export const load: PageServerLoad = async ({ params }) => {
 	const id = Number.parseInt(params.id);
 
 	const db = new Database();
