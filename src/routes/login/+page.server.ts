@@ -39,7 +39,7 @@ export const actions: Actions = {
 		event.cookies.set('session', session, {
 			path: '/',
 			sameSite: 'strict',
-			maxAge: 86400, // 1 day
+			maxAge: 604800, // 1 week
 			secure: true,
 			httpOnly: true
 		});

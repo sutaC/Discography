@@ -15,10 +15,13 @@ export interface Author {
 	name: string;
 }
 
-export interface User {
+export interface UserData {
 	login: string;
-	password: string;
-	salt: string;
 	permissons: string;
 	session: string | null;
+}
+
+export interface User extends UserData {
+	password: string;
+	salt: string;
 }
