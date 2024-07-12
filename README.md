@@ -21,6 +21,10 @@ docker compose up
 
 Connect with `127.0.0.1:5173`
 
+> Default admin credentials are:\
+> Login: `kot`\
+> Password: `kotkotkot`
+
 ## Building
 
 To create a production version:
