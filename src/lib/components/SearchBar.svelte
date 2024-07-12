@@ -10,7 +10,14 @@
 			return;
 		}
 		const res = await fetch(`/search/${slug}`);
-		songs = (await res.json()) as SongTag[];
+		const data = (await res.json()) as SongTag[];
+
+		if (!Array.isArray(data)) {
+			console.error('Not valid data response from fetch: ', res);
+			return;
+		}
+
+		songs = data;
 	};
 </script>
 

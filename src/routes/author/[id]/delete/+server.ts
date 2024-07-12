@@ -1,10 +1,14 @@
-import { deleteAuthor } from '$lib/server/database';
-import type { RequestHandler } from '@sveltejs/kit';
+import Database from '$lib/server/database';
+import { error, type RequestHandler } from '@sveltejs/kit';
 
-export const POST: RequestHandler = async (event) => {
-	console.log('got req');
-	const id: number = Number.parseInt(event.params.id as string);
-	await deleteAuthor(id);
-	console.log('deleted author');
+export const POST: RequestHandler = async ({ params }) => {
+	if (params.id === undefined) error(400, { message: 'Id is missing' });
+	const id: number = Number.parseInt(params.id as string);
+
+	const db = new Database();
+	await db.connect();
+	await db.data.author.delete(id);
+	await db.disconnect();
+
 	return new Response();
 };

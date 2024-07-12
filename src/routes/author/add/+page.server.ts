@@ -1,4 +1,4 @@
-import { addAuthor, findAuthor } from '$lib/server/database';
+import Database from '$lib/server/database';
 import type { Author } from '$lib/types';
 import { redirect, type Actions } from '@sveltejs/kit';
 
@@ -9,9 +9,15 @@ export const actions: Actions = {
 			id: 0, // A_I
 			name: data.get('name') as string
 		};
+
 		// TODO Input validation
-		await addAuthor(author);
-		const { id } = (await findAuthor(author.name)) as Author;
+
+		const db = new Database();
+		await db.connect();
+		await db.data.author.add(author);
+		const { id } = (await db.data.author.find(author.name)) as Author;
+		await db.disconnect();
+
 		redirect(303, `/author/${id}`);
 	}
 } satisfies Actions;
