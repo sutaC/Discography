@@ -1,7 +1,7 @@
 import { error, redirect } from '@sveltejs/kit';
 import type { Actions } from './$types';
 import Database from '$lib/server/database';
-import { hash } from '$lib/server/cryptography';
+import { hash } from '$lib/server/authentication';
 
 export const actions: Actions = {
 	default: async (event) => {

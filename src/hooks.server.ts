@@ -1,3 +1,4 @@
+import { parsePermissions } from '$lib/server/authentication';
 import Database from '$lib/server/database';
 import type { User } from '$lib/types';
 import type { Handle } from '@sveltejs/kit';
@@ -21,7 +22,7 @@ export const handle: Handle = async ({ event, resolve }) => {
 	if (user)
 		event.locals.user = {
 			login: user.login,
-			permissons: user.permissons,
+			permissions: parsePermissions(user.permissions),
 			session: user.session
 		};
 

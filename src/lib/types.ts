@@ -15,13 +15,24 @@ export interface Author {
 	name: string;
 }
 
-export interface UserData {
+interface UserTag {
 	login: string;
-	permissons: string;
 	session: string | null;
 }
 
-export interface User extends UserData {
-	password: string;
+export interface UserObject extends UserTag {
+	permissions: PermissionsObject;
+}
+
+export interface User extends UserTag {
 	salt: string;
+	password: string;
+	permissions: string;
+}
+
+export interface PermissionsObject {
+	granting: boolean; // Granting user permissions - (GRT)
+	adding: boolean; // Adding content - (ADD)
+	deleting: boolean; // Deleting content - (DEL)
+	updating: boolean; // Updating content - (UPD)
 }
