@@ -1,13 +1,19 @@
 <script lang="ts">
 	import type { Author } from '$lib/types';
 
-	export let author: Author = {
+	export let authorInit: Author = {
 		id: 0,
 		name: ''
 	};
 
 	export let action: string = '';
 	export let method: string = '';
+
+	let author: Author = { ...authorInit };
+
+	const handleReset = () => {
+		author = { ...authorInit };
+	};
 </script>
 
 <form {action} {method}>
@@ -15,7 +21,7 @@
 		<label for="name">Name</label>
 		<input type="text" name="name" id="name" bind:value={author.name} />
 	</div>
-	<button type="reset">Reset</button>
+	<button type="reset" on:click|preventDefault={handleReset}>Reset</button>
 	<button type="submit">Submit</button>
 </form>
 

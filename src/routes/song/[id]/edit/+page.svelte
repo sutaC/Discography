@@ -13,6 +13,6 @@
 <SongForm
 	method={'POST'}
 	action={`/song/${data.song.id}/edit`}
-	song={data.song}
+	songInit={data.song}
 	authors={data.authors}
 />

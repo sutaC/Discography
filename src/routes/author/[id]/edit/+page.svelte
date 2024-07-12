@@ -9,4 +9,4 @@
 
 <h1>Edit author</h1>
 
-<AuthorForm action={`/author/${data.id}/edit`} method={'post'} author={data} />
+<AuthorForm action={`/author/${data.id}/edit`} method={'post'} authorInit={data} />

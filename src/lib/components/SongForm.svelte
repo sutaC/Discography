@@ -6,13 +6,19 @@
 
 	export let method: string = '';
 	export let action: string = '';
-	export let song: Song = {
+	export let songInit: Song = {
 		id: 0,
 		title: '',
 		author: '',
 		chords: '',
 		authorId: 0,
 		lyrics: ''
+	};
+
+	let song: Song = { ...songInit };
+
+	const handleReset = () => {
+		song = { ...songInit };
 	};
 </script>
 
@@ -56,7 +62,7 @@
 		</div>
 	</div>
 
-	<button type="reset">Reset</button>
+	<button type="reset" on:click|preventDefault={handleReset}>Reset</button>
 	<button type="submit">Submit</button>
 </form>
 
