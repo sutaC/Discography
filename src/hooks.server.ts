@@ -5,6 +5,7 @@ import type { Handle } from '@sveltejs/kit';
 
 const authURLs: (string | RegExp)[] = [
 	'/profile',
+	'/profile/delete',
 	'/logout',
 	'/song/add',
 	'/author/add',

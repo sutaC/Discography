@@ -1,18 +1,8 @@
 import { error, redirect } from '@sveltejs/kit';
 import type { Actions, PageServerLoad } from './$types';
 import Database from '$lib/server/database';
-import { generateSalt, hash } from '$lib/server/authentication';
+import { generateSalt, hash, sessionCookie } from '$lib/server/authentication';
 import type { User } from '$lib/types';
-
-const cookieConfig = {
-	path: '/',
-	sameSite: 'strict' as 'strict',
-	maxAge: 604800, // 1 week
-	secure: true,
-	httpOnly: true
-};
-
-// ---
 
 export const load: PageServerLoad = async (event) => {
 	if (!!event.locals.user) redirect(301, '/profile');
@@ -51,7 +41,7 @@ export const actions: Actions = {
 		await db.data.user.updateSession(user.login, session);
 		await db.disconnect();
 
-		event.cookies.set('session', session, cookieConfig);
+		event.cookies.set(sessionCookie.name, session, sessionCookie.config);
 
 		redirect(301, '/profile');
 	},
@@ -92,7 +82,7 @@ export const actions: Actions = {
 		await db.data.user.add(user);
 		await db.disconnect();
 
-		event.cookies.set('session', user.session as string, cookieConfig);
+		event.cookies.set(sessionCookie.name, user.session as string, sessionCookie.config);
 
 		redirect(301, '/profile');
 	}

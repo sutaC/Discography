@@ -160,6 +160,9 @@ export default class Database {
 						[user.login, user.password, user.salt, user.permissions, user.session]
 					);
 				}
+			},
+			delete: async (login: string): Promise<void> => {
+				await this.query<void>('DELETE FROM users WHERE users.login = ?;', [login]);
 			}
 		}
 	};

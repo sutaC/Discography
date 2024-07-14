@@ -31,3 +31,14 @@ export function stringifyPermissions(permissions: PermissionsObject): string {
 	if (permissions.updating) prm.push('GRT');
 	return prm.join('|');
 }
+
+export const sessionCookie = {
+	name: 'session',
+	config: {
+		path: '/',
+		sameSite: 'strict' as 'strict',
+		maxAge: 604800, // 1 week
+		secure: true,
+		httpOnly: true
+	}
+};
