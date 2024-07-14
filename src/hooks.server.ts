@@ -1,4 +1,4 @@
-import { parsePermissions } from '$lib/server/authentication';
+import { parsePermissions, sessionCookie } from '$lib/server/authentication';
 import Database from '$lib/server/database';
 import type { User } from '$lib/types';
 import type { Handle } from '@sveltejs/kit';
@@ -24,7 +24,11 @@ export const handle: Handle = async ({ event, resolve }) => {
 		await db.connect();
 		user = await db.data.user.getBySession(session);
 		await db.disconnect();
+		if (!user) {
+			event.cookies.delete(sessionCookie.name, sessionCookie.config);
+		}
 	}
+
 	const isAuthURL = authURLs.find((url) => event.url.pathname.match(url));
 	if (isAuthURL && !user) return new Response(null, { status: 401, statusText: 'Unauthorized' });
 
