@@ -1,12 +1,6 @@
 <script lang="ts">
 	import type { PageData } from './$types';
 	export let data: PageData;
-
-	const handleDelete = async () => {
-		const isSure = confirm('Are you sure you want do delete your account permamently?');
-		if (!isSure) return;
-		await fetch('/profile', { method: 'DELETE' });
-	};
 </script>
 
 <header>
@@ -16,7 +10,6 @@
 		<a href="/profile/delete">Delete account</a>
 	</nav>
 	<form action="/logout" method="post"><button type="submit">Logout</button></form>
-	<button on:click|preventDefault={handleDelete}>Delete account</button>
 </header>
 
 <style>
