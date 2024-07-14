@@ -1,14 +1,25 @@
 import { error, redirect } from '@sveltejs/kit';
 import type { Actions, PageServerLoad } from './$types';
 import Database from '$lib/server/database';
-import { hash } from '$lib/server/authentication';
+import { generateSalt, hash } from '$lib/server/authentication';
+import type { User } from '$lib/types';
+
+const cookieConfig = {
+	path: '/',
+	sameSite: 'strict' as 'strict',
+	maxAge: 604800, // 1 week
+	secure: true,
+	httpOnly: true
+};
+
+// ---
 
 export const load: PageServerLoad = async (event) => {
 	if (!!event.locals.user) redirect(301, '/profile');
 };
 
 export const actions: Actions = {
-	default: async (event) => {
+	login: async (event) => {
 		const data = await event.request.formData();
 		const userData = {
 			login: data.get('login') as string | null,
@@ -40,13 +51,48 @@ export const actions: Actions = {
 		await db.data.user.updateSession(user.login, session);
 		await db.disconnect();
 
-		event.cookies.set('session', session, {
-			path: '/',
-			sameSite: 'strict',
-			maxAge: 604800, // 1 week
-			secure: true,
-			httpOnly: true
-		});
+		event.cookies.set('session', session, cookieConfig);
+
+		redirect(301, '/profile');
+	},
+	register: async (event) => {
+		const data = await event.request.formData();
+		const userData = {
+			login: data.get('login') as string | null,
+			password: data.get('password') as string | null,
+			repeatPassword: data.get('repeatPassword') as string | null
+		};
+
+		if (!userData.login || !userData.password || !userData.repeatPassword)
+			error(400, { message: 'Missing data' });
+
+		// TODO: validate input
+		if (userData.password !== userData.repeatPassword)
+			error(400, { message: 'Password is not the same as repeat password' });
+		// ---
+
+		const db = new Database();
+		await db.connect();
+		const hasUser = (await db.data.user.get(userData.login)) !== null;
+
+		if (hasUser) {
+			await db.disconnect();
+			error(400, { message: 'Login is already taken' });
+		}
+
+		const salt = generateSalt();
+		const user: User = {
+			login: userData.login,
+			salt,
+			password: await hash(userData.password + salt),
+			permissions: '',
+			session: crypto.randomUUID()
+		};
+
+		await db.data.user.add(user);
+		await db.disconnect();
+
+		event.cookies.set('session', user.session as string, cookieConfig);
 
 		redirect(301, '/profile');
 	}

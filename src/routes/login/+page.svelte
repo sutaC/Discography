@@ -1,11 +1,13 @@
 <header>
-	<h1>Login</h1>
+	<h1>Get your profile!</h1>
 	<nav>
 		<a href="/">Home</a>
 	</nav>
 </header>
 
-<form action="/login" method="post">
+<form action="?/login" method="post">
+	<h2>Log in</h2>
+
 	<div class="field">
 		<label for="login">Login:</label>
 		<input
@@ -38,8 +40,60 @@
 	</div>
 </form>
 
+<form action="?/register" method="post">
+	<h2>Register</h2>
+
+	<div class="field">
+		<label for="login">Login:</label>
+		<input
+			type="text"
+			name="login"
+			id="login"
+			placeholder="Login..."
+			autocomplete="username"
+			required
+			minlength="1"
+			maxlength="32"
+		/>
+	</div>
+	<div class="field">
+		<label for="password">Password:</label>
+		<input
+			type="password"
+			name="password"
+			id="password"
+			placeholder="Password..."
+			autocomplete="new-password"
+			required
+			minlength="8"
+			max="32"
+		/>
+	</div>
+	<div class="field">
+		<label for="repeatPassword">Repeat password:</label>
+		<input
+			type="password"
+			name="repeatPassword"
+			id="repeatPassword"
+			placeholder="Repeat password..."
+			autocomplete="new-password"
+			required
+			minlength="8"
+			max="32"
+		/>
+	</div>
+	<div class="foot">
+		<button type="reset">Reset</button>
+		<button type="submit">Register</button>
+	</div>
+</form>
+
 <style>
 	header {
+		text-align: center;
+	}
+
+	h2 {
 		text-align: center;
 	}
 

@@ -25,9 +25,10 @@ export default class Database {
 		try {
 			const stmt = await this.connection.prepare(query);
 			const [result] = (await stmt.execute(data)) as unknown as T[][];
+			await stmt.close();
 			return result;
 		} catch (error) {
-			await this.disconnect();
+			if (this.connected) await this.disconnect();
 			throw error;
 		}
 	}
@@ -146,6 +147,19 @@ export default class Database {
 					session
 				]);
 				return res[0] ?? null;
+			},
+			add: async (user: User): Promise<void> => {
+				if (user.session === null) {
+					await this.query<User>(
+						'INSERT INTO users (login, password, salt, permissions, session) VALUES (?, ?, ?, ?, NULL)',
+						[user.login, user.password, user.salt, user.permissions]
+					);
+				} else {
+					await this.query<User>(
+						'INSERT INTO users (login, password, salt, permissions, session) VALUES (?, ?, ?, ?, ?)',
+						[user.login, user.password, user.salt, user.permissions, user.session]
+					);
+				}
 			}
 		}
 	};
