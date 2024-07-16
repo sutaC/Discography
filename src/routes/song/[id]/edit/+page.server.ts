@@ -38,10 +38,15 @@ export const actions: Actions = {
 		const valRes = validateSongData(song);
 		if (!valRes.success) error(400, { message: valRes.message as string });
 
-		// TODO: Check author
-
 		const db = new Database();
 		await db.connect();
+
+		const isAuthor = (await db.data.author.get(song.authorId)) !== null;
+		if (!isAuthor) {
+			await db.disconnect();
+			error(400, 'Not valid author id');
+		}
+
 		await db.data.song.update(song as Song);
 		await db.disconnect();
 	}
