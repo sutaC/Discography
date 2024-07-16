@@ -25,7 +25,15 @@
 <form {method} {action}>
 	<div class="field">
 		<label for="title">Title:</label>
-		<input type="text" name="title" id="title" bind:value={song.title} required maxlength="256" />
+		<input
+			type="text"
+			name="title"
+			id="title"
+			bind:value={song.title}
+			required
+			minlength="2"
+			maxlength="256"
+		/>
 	</div>
 
 	<div class="field">

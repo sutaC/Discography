@@ -26,8 +26,8 @@ export const actions: Actions = {
 			name: data.get('name')?.toString()
 		};
 
-		const validationResult = validateAuthorData(author);
-		if (!validationResult.success) error(400, { message: validationResult.message as string });
+		const valRes = validateAuthorData(author);
+		if (!valRes.success) error(400, { message: valRes.message as string });
 
 		const db = new Database();
 		await db.connect();

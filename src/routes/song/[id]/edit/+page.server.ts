@@ -2,6 +2,7 @@ import type { Author, Song } from '$lib/types';
 import type { PageServerLoad } from './$types';
 import Database from '$lib/server/database';
 import { error, type Actions } from '@sveltejs/kit';
+import { validateSongData } from '$lib/server/validation';
 
 export const load: PageServerLoad = async (event) => {
 	if (!event.locals.user?.permissions.updating) error(401, { message: 'Unauthorized' });
@@ -26,20 +27,22 @@ export const load: PageServerLoad = async (event) => {
 export const actions: Actions = {
 	default: async (event) => {
 		const data = await event.request.formData();
-		const song: Song = {
+		const song = {
 			id: Number.parseInt(event.params.id as string),
-			title: (data.get('title') as string).trim(),
-			author: '',
-			authorId: Number.parseInt(data.get('author') as string),
-			chords: data.get('chords') as string,
-			lyrics: data.get('lyrics') as string
+			title: data.get('title')?.toString(),
+			authorId: Number.parseInt(data.get('author')?.toString() ?? 'NaN'),
+			chords: data.get('chords')?.toString(),
+			lyrics: data.get('lyrics')?.toString()
 		};
 
-		// TODO: validate input
+		const valRes = validateSongData(song);
+		if (!valRes.success) error(400, { message: valRes.message as string });
+
+		// TODO: Check author
 
 		const db = new Database();
 		await db.connect();
-		await db.data.song.update(song);
+		await db.data.song.update(song as Song);
 		await db.disconnect();
 	}
 } satisfies Actions;

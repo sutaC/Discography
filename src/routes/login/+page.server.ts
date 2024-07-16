@@ -19,8 +19,8 @@ export const actions: Actions = {
 
 		if (!userData.login || !userData.password) error(400, { message: 'Missing data' });
 
-		const validationResult = validateUserData(userData as UserData);
-		if (!validationResult.success) error(400, { message: validationResult.message as string });
+		const valRes = validateUserData(userData as UserData);
+		if (!valRes.success) error(400, { message: valRes.message as string });
 
 		const db = new Database();
 		await db.connect();
@@ -55,8 +55,8 @@ export const actions: Actions = {
 			repeatPassword: data.get('repeatPassword')?.toString()
 		};
 
-		const validationResult = validateUserData(userData as UserData);
-		if (!validationResult.success) error(400, { message: validationResult.message as string });
+		const valRes = validateUserData(userData as UserData);
+		if (!valRes.success) error(400, { message: valRes.message as string });
 		if (userData.password !== userData.repeatPassword)
 			error(400, { message: 'Password is not the same as repeat password' });
 
