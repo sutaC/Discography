@@ -80,3 +80,30 @@ export function validateUserData(userData: UserData): ValidationResult {
 
 	return parseValidationResult(vr);
 }
+
+// Author data
+export interface AuthorData {
+	name: string;
+}
+
+export function validateAuthorData(authorData: AuthorData): ValidationResult {
+	const vr = ValidationResultsObj();
+
+	if (authorData.name.length < 2) {
+		vr.success = false;
+		vr.errors.push(ValidationError('name', 'length should be min. 2 characters long'));
+	} else if (authorData.name.length > 256) {
+		vr.success = false;
+		vr.errors.push(ValidationError('name', 'length should be min. 256 characters long'));
+	} else if (authorData.name.match(/[^\w ]{1,}/gm) !== null) {
+		vr.success = false;
+		vr.errors.push(
+			ValidationError(
+				'name',
+				'has illegal characters. (Legal characters are a-z, A-Z, 0-9, _(underscore),  (space))'
+			)
+		);
+	}
+
+	return parseValidationResult(vr);
+}

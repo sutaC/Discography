@@ -114,11 +114,12 @@ export default class Database {
 			getAll: async (): Promise<Author[]> => {
 				return await this.query<Author>('SELECT * FROM authors');
 			},
-			find: async (name: string): Promise<Author | null> => {
-				const res = await this.query<Author>('SELECT * FROM authors WHERE authors.name LIKE ?;', [
-					name
-				]);
-				return res[0] ?? null;
+			findId: async (name: string): Promise<number | null> => {
+				const res = await this.query<{ id: number }>(
+					'SELECT authors.name FROM authors WHERE authors.name = ?;',
+					[name]
+				);
+				return res[0]?.id ?? null;
 			},
 			add: async (author: Author): Promise<void> => {
 				await this.query<void>('INSERT INTO authors (id, name) VALUES (NULL, ?);', [author.name]);

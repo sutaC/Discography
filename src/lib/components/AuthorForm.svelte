@@ -19,7 +19,15 @@
 <form {action} {method}>
 	<div class="field">
 		<label for="name">Name</label>
-		<input type="text" name="name" id="name" bind:value={author.name} />
+		<input
+			type="text"
+			name="name"
+			id="name"
+			bind:value={author.name}
+			required
+			minlength="2"
+			maxlength="256"
+		/>
 	</div>
 	<button type="reset" on:click|preventDefault={handleReset}>Reset</button>
 	<button type="submit">Submit</button>

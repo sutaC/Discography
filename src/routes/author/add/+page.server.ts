@@ -1,4 +1,5 @@
 import Database from '$lib/server/database';
+import { validateAuthorData, type AuthorData } from '$lib/server/validation';
 import type { Author } from '$lib/types';
 import { error, redirect, type Actions } from '@sveltejs/kit';
 
@@ -7,17 +8,21 @@ export const actions: Actions = {
 		if (!event.locals.user?.permissions.adding) error(401, { message: 'Unauthorized' });
 
 		const data = await event.request.formData();
-		const author: Author = {
+		const author = {
 			id: 0, // A_I
-			name: data.get('name') as string
+			name: data.get('name')?.toString()
 		};
 
-		// TODO: Input validation
+		if (!author.name) error(400, 'Missing data');
+
+		const validationResult = validateAuthorData(author as AuthorData);
+		if (!validationResult.success)
+			return error(400, { message: validationResult.message as string });
 
 		const db = new Database();
 		await db.connect();
-		await db.data.author.add(author);
-		const { id } = (await db.data.author.find(author.name)) as Author;
+		await db.data.author.add(author as Author);
+		const id = await db.data.author.findId(author.name);
 		await db.disconnect();
 
 		redirect(303, `/author/${id}`);
