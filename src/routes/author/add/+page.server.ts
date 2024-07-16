@@ -1,16 +1,18 @@
 import Database from '$lib/server/database';
 import type { Author } from '$lib/types';
-import { redirect, type Actions } from '@sveltejs/kit';
+import { error, redirect, type Actions } from '@sveltejs/kit';
 
 export const actions: Actions = {
 	default: async (event) => {
+		if (!event.locals.user?.permissions.adding) error(401, { message: 'Unauthorized' });
+
 		const data = await event.request.formData();
 		const author: Author = {
 			id: 0, // A_I
 			name: data.get('name') as string
 		};
 
-		// TODO Input validation
+		// TODO: Input validation
 
 		const db = new Database();
 		await db.connect();

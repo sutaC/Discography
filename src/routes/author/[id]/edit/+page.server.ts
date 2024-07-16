@@ -17,6 +17,8 @@ export const load: PageServerLoad = async ({ params }) => {
 
 export const actions: Actions = {
 	default: async (event) => {
+		if (!event.locals.user?.permissions.updating) error(401, { message: 'Unauthorized' });
+
 		const data = await event.request.formData();
 		const author: Author = {
 			id: Number.parseInt(event.params.id as string),

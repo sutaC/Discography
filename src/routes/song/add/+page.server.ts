@@ -1,7 +1,7 @@
 import type { Author, Song, SongTag } from '$lib/types';
 import type { Actions, PageServerLoad } from './$types';
 import Database from '$lib/server/database';
-import { redirect } from '@sveltejs/kit';
+import { error, redirect } from '@sveltejs/kit';
 
 export const load: PageServerLoad = async () => {
 	const db = new Database();
@@ -14,6 +14,8 @@ export const load: PageServerLoad = async () => {
 
 export const actions: Actions = {
 	default: async (event) => {
+		if (!event.locals.user?.permissions.adding) error(401, { message: 'Unauthorized' });
+
 		const data = await event.request.formData();
 		const song: Song = {
 			id: 0, // A_I

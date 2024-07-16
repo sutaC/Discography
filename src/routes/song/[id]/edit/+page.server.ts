@@ -3,8 +3,10 @@ import type { PageServerLoad } from './$types';
 import Database from '$lib/server/database';
 import { error, type Actions } from '@sveltejs/kit';
 
-export const load: PageServerLoad = async ({ params }) => {
-	const id = Number.parseInt(params.id);
+export const load: PageServerLoad = async (event) => {
+	if (!event.locals.user?.permissions.updating) error(401, { message: 'Unauthorized' });
+
+	const id = Number.parseInt(event.params.id);
 
 	const db = new Database();
 	await db.connect();
