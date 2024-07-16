@@ -83,13 +83,16 @@ export function validateUserData(userData: UserData): ValidationResult {
 
 // Author data
 export interface AuthorData {
-	name: string;
+	name?: string;
 }
 
 export function validateAuthorData(authorData: AuthorData): ValidationResult {
 	const vr = ValidationResultsObj();
 
-	if (authorData.name.length < 2) {
+	if (!authorData.name) {
+		vr.success = false;
+		vr.errors.push(ValidationError('name', 'is missing'));
+	} else if (authorData.name.length < 2) {
 		vr.success = false;
 		vr.errors.push(ValidationError('name', 'length should be min. 2 characters long'));
 	} else if (authorData.name.length > 256) {

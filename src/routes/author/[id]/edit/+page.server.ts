@@ -2,6 +2,7 @@ import type { Author } from '$lib/types';
 import type { PageServerLoad } from './$types';
 import Database from '$lib/server/database';
 import { error, type Actions } from '@sveltejs/kit';
+import { validateAuthorData } from '$lib/server/validation';
 
 export const load: PageServerLoad = async ({ params }) => {
 	const id = Number.parseInt(params.id);
@@ -20,14 +21,17 @@ export const actions: Actions = {
 		if (!event.locals.user?.permissions.updating) error(401, { message: 'Unauthorized' });
 
 		const data = await event.request.formData();
-		const author: Author = {
+		const author = {
 			id: Number.parseInt(event.params.id as string),
-			name: (data.get('name') as string).trim()
+			name: data.get('name')?.toString()
 		};
+
+		const validationResult = validateAuthorData(author);
+		if (!validationResult.success) error(400, { message: validationResult.message as string });
 
 		const db = new Database();
 		await db.connect();
-		await db.data.author.update(author);
+		await db.data.author.update(author as Author);
 		await db.disconnect();
 	}
 } satisfies Actions;

@@ -13,8 +13,6 @@ export const actions: Actions = {
 			name: data.get('name')?.toString()
 		};
 
-		if (!author.name) error(400, 'Missing data');
-
 		const validationResult = validateAuthorData(author as AuthorData);
 		if (!validationResult.success)
 			return error(400, { message: validationResult.message as string });
@@ -22,7 +20,7 @@ export const actions: Actions = {
 		const db = new Database();
 		await db.connect();
 		await db.data.author.add(author as Author);
-		const id = await db.data.author.findId(author.name);
+		const id = await db.data.author.findId(author.name as string);
 		await db.disconnect();
 
 		redirect(303, `/author/${id}`);
