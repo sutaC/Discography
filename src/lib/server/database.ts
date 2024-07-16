@@ -1,6 +1,6 @@
 import mysql from 'mysql2/promise';
 import { env } from '$env/dynamic/private';
-import type { Author, Song, SongTag, Star, User } from '../types';
+import type { Author, Song, SongTag, SongTagStared, Star, User } from '../types';
 
 export default class Database {
 	private readonly config = {
@@ -60,14 +60,14 @@ export default class Database {
 				);
 				return res[0] ?? null;
 			},
-			getAll: async (): Promise<SongTag[]> => {
-				return await this.query<SongTag>(
-					'SELECT songs.id, songs.title, songs.author_id AS authorId, authors.name AS author FROM songs JOIN authors ON songs.author_id = authors.id;'
+			getAll: async (): Promise<SongTagStared[]> => {
+				return await this.query<SongTagStared>(
+					'SELECT songs.id, songs.title, songs.author_id AS "authorId", authors.name AS "author", COUNT(stars.song_id) AS "stars" FROM songs JOIN authors ON songs.author_id = authors.id LEFT JOIN stars ON songs.id = stars.song_id GROUP BY songs.id;'
 				);
 			},
-			getAllStared: async (login: string): Promise<SongTag[]> => {
+			getAllStaredByUser: async (login: string): Promise<SongTag[]> => {
 				return await this.query<SongTag>(
-					'SELECT songs.id, songs.author_id AS "authorId", songs.title, authors.name AS "author" FROM songs JOIN authors ON songs.author_id = authors.id JOIN starts ON songs.id = starts.song_id WHERE starts.user_login = ?;',
+					'SELECT songs.id, songs.author_id AS "authorId", songs.title, authors.name AS "author" FROM songs JOIN authors ON songs.author_id = authors.id JOIN stars ON songs.id = stars.song_id WHERE stars.user_login = ?;',
 					[login]
 				);
 			},
@@ -174,27 +174,27 @@ export default class Database {
 		stars: {
 			get: async (login: string, songId: number): Promise<Star | null> => {
 				const res = await this.query<Star>(
-					'SELECT starts.user_login AS "login", starts.song_id AS "songId" FROM starts WHERE user_login = ? AND song_id = ?;',
+					'SELECT stars.user_login AS "login", stars.song_id AS "songId" FROM stars WHERE user_login = ? AND song_id = ?;',
 					[login, songId]
 				);
 				return res[0] ?? null;
 			},
 
 			add: async (login: string, songId: number): Promise<void> => {
-				await this.query<void>('INSERT INTO starts (user_login, song_id) VALUES (?, ?)', [
+				await this.query<void>('INSERT INTO stars (user_login, song_id) VALUES (?, ?)', [
 					login,
 					songId
 				]);
 			},
 			delete: async (login: string, songId: number): Promise<void> => {
 				await this.query<void>(
-					'DELETE FROM starts WHERE starts.user_login = ? AND starts.song_id = ?;',
+					'DELETE FROM stars WHERE stars.user_login = ? AND stars.song_id = ?;',
 					[login, songId]
 				);
 			},
 			countSongs: async (songId: number): Promise<number | null> => {
 				const res = await this.query<{ count: number }>(
-					'SELECT COUNT(*) AS "count" FROM starts WHERE song_id = ?;',
+					'SELECT COUNT(*) AS "count" FROM stars WHERE song_id = ?;',
 					[songId]
 				);
 				return res[0]?.count ?? null;

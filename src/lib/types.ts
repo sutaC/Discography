@@ -1,3 +1,4 @@
+// Songs
 export interface SongTag {
 	id: number;
 	authorId: number;
@@ -5,16 +6,22 @@ export interface SongTag {
 	author: string;
 }
 
+export interface SongTagStared extends SongTag {
+	stars: number;
+}
+
 export interface Song extends SongTag {
 	lyrics: string;
 	chords: string;
 }
 
+// Authors
 export interface Author {
 	id: number;
 	name: string;
 }
 
+// Users
 interface UserTag {
 	login: string;
 	session: string | null;
@@ -36,6 +43,8 @@ export interface PermissionsObject {
 	deleting: boolean; // Deleting content - (DEL)
 	updating: boolean; // Updating content - (UPD)
 }
+
+// Stars
 
 export interface Star {
 	login: string;

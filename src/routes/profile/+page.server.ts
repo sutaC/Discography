@@ -8,7 +8,7 @@ export const load: PageServerLoad = async (event) => {
 
 	const db = new Database();
 	await db.connect();
-	const songs = await db.data.song.getAllStared(login);
+	const songs = await db.data.song.getAllStaredByUser(login);
 	await db.disconnect();
 	return { login, songs };
 };
