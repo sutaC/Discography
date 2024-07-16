@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Lip 16, 2024 at 10:40 AM
+-- Generation Time: Lip 16, 2024 at 07:24 PM
 -- Wersja serwera: 9.0.0
 -- Wersja PHP: 8.2.12
 
@@ -70,21 +70,22 @@ INSERT INTO `songs` (`id`, `author_id`, `title`, `lyrics`, `chords`) VALUES
 -- --------------------------------------------------------
 
 --
--- Struktura tabeli dla tabeli `starts`
+-- Struktura tabeli dla tabeli `stars`
 --
 
-CREATE TABLE `starts` (
-  `id` int UNSIGNED NOT NULL,
+CREATE TABLE `stars` (
   `user_login` varchar(32) NOT NULL,
   `song_id` int UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
--- Dumping data for table `starts`
+-- Dumping data for table `stars`
 --
 
-INSERT INTO `starts` (`id`, `user_login`, `song_id`) VALUES
-(4, 'kot', 3);
+INSERT INTO `stars` (`user_login`, `song_id`) VALUES
+('adam', 3),
+('kot', 3),
+('adam', 4);
 
 -- --------------------------------------------------------
 
@@ -105,7 +106,8 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`login`, `password`, `salt`, `permissions`, `session`) VALUES
-('kot', 'f0bd2b3a042718b5025cfe96544fd6325370ab61b1bc137b7ae718d456e66dc8', 'c68a00c9', 'ADD|DEL|UPD|GRT', NULL);
+('adam', 'ffbf72487f1b4c1ae1976e8c141af1f0b808bfff443517ab1a36e59d5d48510d', 'bbe29178', '', NULL),
+('kot', 'f0bd2b3a042718b5025cfe96544fd6325370ab61b1bc137b7ae718d456e66dc8', 'c68a00c9', 'ADD|DEL|UPD|GRT', '31c4f485-d20c-4d9f-8db9-9876a129fd87');
 
 --
 -- Indeksy dla zrzutów tabel
@@ -125,11 +127,10 @@ ALTER TABLE `songs`
   ADD KEY `author_id` (`author_id`);
 
 --
--- Indeksy dla tabeli `starts`
+-- Indeksy dla tabeli `stars`
 --
-ALTER TABLE `starts`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `users-songs` (`user_login`,`song_id`),
+ALTER TABLE `stars`
+  ADD PRIMARY KEY (`user_login`,`song_id`) USING BTREE,
   ADD KEY `song_id` (`song_id`);
 
 --
@@ -148,19 +149,13 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `authors`
 --
 ALTER TABLE `authors`
-  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `songs`
 --
 ALTER TABLE `songs`
-  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
-
---
--- AUTO_INCREMENT for table `starts`
---
-ALTER TABLE `starts`
-  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- Constraints for dumped tables
@@ -173,11 +168,11 @@ ALTER TABLE `songs`
   ADD CONSTRAINT `songs_ibfk_1` FOREIGN KEY (`author_id`) REFERENCES `authors` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints for table `starts`
+-- Constraints for table `stars`
 --
-ALTER TABLE `starts`
-  ADD CONSTRAINT `starts_ibfk_1` FOREIGN KEY (`user_login`) REFERENCES `users` (`login`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `starts_ibfk_2` FOREIGN KEY (`song_id`) REFERENCES `songs` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `stars`
+  ADD CONSTRAINT `stars_ibfk_1` FOREIGN KEY (`user_login`) REFERENCES `users` (`login`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `stars_ibfk_2` FOREIGN KEY (`song_id`) REFERENCES `songs` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
