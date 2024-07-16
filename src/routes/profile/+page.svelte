@@ -21,6 +21,7 @@
 				<a href="/song/{song.id}">{song.title}</a>
 				-
 				<a href="/author/{song.authorId}">{song.author}</a>
+				- stars: {song.stars}
 			</div>
 		{:else}
 			<p>Looks empty... Maybe you should star some songs!</p>

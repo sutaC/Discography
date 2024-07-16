@@ -4,7 +4,7 @@
 	import type { PageData } from './$types';
 
 	export let data: PageData;
-	let search: SongTag[] = [];
+	let search: (SongTag & { stars: number })[] = [];
 </script>
 
 <header>
@@ -17,6 +17,7 @@
 				<a href="/song/{song.id}">{song.title}</a>
 				-
 				<a href="/author/{song.authorId}">{song.author}</a>
+				- stars: {song.stars}
 			</div>
 		{/each}
 	</div>

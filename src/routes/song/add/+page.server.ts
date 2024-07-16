@@ -29,7 +29,7 @@ export const actions: Actions = {
 		const db = new Database();
 		await db.connect();
 		await db.data.song.add(song);
-		const { id } = (await db.data.song.find(song.title)) as SongTag;
+		const id = await db.data.song.findId(song.title);
 		await db.disconnect();
 		redirect(303, `/song/${id}`);
 	}

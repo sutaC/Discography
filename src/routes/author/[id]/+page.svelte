@@ -26,11 +26,13 @@
 <h2>Songs made by:</h2>
 
 {#each data.songs as song}
-	<a href={`/song/${song.id}`} class="song">{song.title}</a>
+	<div class="tag">
+		<a href={`/song/${song.id}`}>{song.title}</a> - stars: {song.stars}
+	</div>
 {/each}
 
 <style>
-	.song {
+	.tag {
 		display: block;
 		padding: 0.5rem;
 		margin: 0.5rem 0;

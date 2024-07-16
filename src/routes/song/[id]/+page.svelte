@@ -32,7 +32,7 @@
 			<button on:click|preventDefault={handlePrint}>Print</button>
 			<StartsCounter
 				isStared={data.isStared}
-				startsCount={data.stars}
+				startsCount={data.song.stars}
 				logedIn={!!data.permissions}
 				songId={data.song.id}
 			/>

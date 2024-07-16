@@ -6,10 +6,6 @@ export interface SongTag {
 	author: string;
 }
 
-export interface SongTagStared extends SongTag {
-	stars: number;
-}
-
 export interface Song extends SongTag {
 	lyrics: string;
 	chords: string;

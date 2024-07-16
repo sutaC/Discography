@@ -1,7 +1,7 @@
 <script lang="ts">
 	import type { SongTag } from '$lib/types';
 
-	export let songs: SongTag[] = [];
+	export let songs: (SongTag & { stars: number })[] = [];
 	let slug: string = '';
 
 	const handleSearch = async () => {
@@ -10,7 +10,7 @@
 			return;
 		}
 		const res = await fetch(`/search/${slug}`);
-		const data = (await res.json()) as SongTag[];
+		const data = (await res.json()) as (SongTag & { stars: number })[];
 
 		if (!Array.isArray(data)) {
 			console.error('Not valid data response from fetch: ', res);

@@ -14,14 +14,11 @@ export const load: PageServerLoad = async (event) => {
 		error(404, { message: 'Not found' });
 	}
 
-	const stars = (await db.data.stars.countSongs(song.id)) ?? 0;
-
 	let isStared = false;
 	if (event.locals.user) {
 		isStared = (await db.data.stars.get(event.locals.user.login, id)) !== null;
 	}
-
 	await db.disconnect();
 
-	return { song, stars, isStared, permissions: event.locals.user?.permissions };
+	return { song, isStared, permissions: event.locals.user?.permissions };
 };
