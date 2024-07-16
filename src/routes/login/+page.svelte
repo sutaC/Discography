@@ -17,7 +17,7 @@
 			placeholder="Login..."
 			autocomplete="username"
 			required
-			minlength="1"
+			minlength="2"
 			maxlength="32"
 		/>
 	</div>
@@ -52,7 +52,7 @@
 			placeholder="Login..."
 			autocomplete="username"
 			required
-			minlength="1"
+			minlength="2"
 			maxlength="32"
 		/>
 	</div>

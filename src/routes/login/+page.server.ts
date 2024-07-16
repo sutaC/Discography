@@ -3,6 +3,7 @@ import type { Actions, PageServerLoad } from './$types';
 import Database from '$lib/server/database';
 import { generateSalt, hash, sessionCookie } from '$lib/server/authentication';
 import type { User } from '$lib/types';
+import { validateUserData, type UserData } from '$lib/server/validation';
 
 export const load: PageServerLoad = async (event) => {
 	if (!!event.locals.user) redirect(301, '/profile');
@@ -12,13 +13,14 @@ export const actions: Actions = {
 	login: async (event) => {
 		const data = await event.request.formData();
 		const userData = {
-			login: data.get('login') as string | null,
-			password: data.get('password') as string | null
+			login: data.get('login')?.toString(),
+			password: data.get('password')?.toString()
 		};
 
 		if (!userData.login || !userData.password) error(400, { message: 'Missing data' });
 
-		// TODO: input validation
+		const validationResult = validateUserData(userData as UserData);
+		if (!validationResult.success) error(400, { message: validationResult.message as string });
 
 		const db = new Database();
 		await db.connect();
@@ -48,17 +50,19 @@ export const actions: Actions = {
 	register: async (event) => {
 		const data = await event.request.formData();
 		const userData = {
-			login: data.get('login') as string | null,
-			password: data.get('password') as string | null,
-			repeatPassword: data.get('repeatPassword') as string | null
+			login: data.get('login')?.toString(),
+			password: data.get('password')?.toString(),
+			repeatPassword: data.get('repeatPassword')?.toString()
 		};
 
 		if (!userData.login || !userData.password || !userData.repeatPassword)
 			error(400, { message: 'Missing data' });
 
-		// TODO: validate input
 		if (userData.password !== userData.repeatPassword)
 			error(400, { message: 'Password is not the same as repeat password' });
+
+		const validationResult = validateUserData(userData as UserData);
+		if (!validationResult.success) error(400, { message: validationResult.message as string });
 		// ---
 
 		const db = new Database();
