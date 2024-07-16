@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { browser } from '$app/environment';
+	import StartsCounter from '$lib/components/StartsCounter.svelte';
 	import type { PageData } from './$types';
 	export let data: PageData;
 
@@ -16,19 +17,28 @@
 	};
 </script>
 
-<a href="/">Home</a>
-{#if data.permissions?.updating}
-	<a href={`/song/${data.song.id}/edit`}>Edit</a>
-{/if}
-{#if data.permissions?.deleting}
-	<button on:click|preventDefault={handleDelete}>Delete</button>
-{/if}
-<button on:click|preventDefault={handlePrint}>Print</button>
+<header>
+	<div class="controls">
+		<nav>
+			<a href="/">Home</a>
+		</nav>
+		<div class="cta">
+			{#if data.permissions?.updating}
+				<a href={`/song/${data.song.id}/edit`}>Edit</a>
+			{/if}
+			{#if data.permissions?.deleting}
+				<button on:click|preventDefault={handleDelete}>Delete</button>
+			{/if}
+			<button on:click|preventDefault={handlePrint}>Print</button>
+			<StartsCounter startsCount={data.stars} logedIn={!!data.permissions} songId={data.song.id} />
+		</div>
+	</div>
 
-<h1 class="print inline">
-	{data.song.title} -
-	<a class="print inline" href={`/author/${data.song.authorId}`}>{data.song.author}</a>
-</h1>
+	<h1 class="print inline">
+		{data.song.title} -
+		<a class="print inline" href={`/author/${data.song.authorId}`}>{data.song.author}</a>
+	</h1>
+</header>
 
 <main class="print flex">
 	<div class="lyrics">
@@ -43,6 +53,19 @@
 </main>
 
 <style>
+	.controls {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		padding: 0 1em;
+	}
+
+	.cta {
+		display: flex;
+		gap: 0.25rem;
+		align-items: start;
+	}
+
 	main {
 		display: flex;
 		padding: 1rem;

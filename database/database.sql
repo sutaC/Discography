@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Lip 12, 2024 at 10:15 PM
+-- Generation Time: Lip 16, 2024 at 10:40 AM
 -- Wersja serwera: 9.0.0
 -- Wersja PHP: 8.2.12
 
@@ -70,6 +70,25 @@ INSERT INTO `songs` (`id`, `author_id`, `title`, `lyrics`, `chords`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Struktura tabeli dla tabeli `starts`
+--
+
+CREATE TABLE `starts` (
+  `id` int UNSIGNED NOT NULL,
+  `user_login` varchar(32) NOT NULL,
+  `song_id` int UNSIGNED NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `starts`
+--
+
+INSERT INTO `starts` (`id`, `user_login`, `song_id`) VALUES
+(4, 'kot', 3);
+
+-- --------------------------------------------------------
+
+--
 -- Struktura tabeli dla tabeli `users`
 --
 
@@ -86,7 +105,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`login`, `password`, `salt`, `permissions`, `session`) VALUES
-('kot', 'f0bd2b3a042718b5025cfe96544fd6325370ab61b1bc137b7ae718d456e66dc8', 'c68a00c9', 'ADD|DEL|UPD|GRT', '633a2a51-652d-4585-8e32-158cc0dd6e53');
+('kot', 'f0bd2b3a042718b5025cfe96544fd6325370ab61b1bc137b7ae718d456e66dc8', 'c68a00c9', 'ADD|DEL|UPD|GRT', NULL);
 
 --
 -- Indeksy dla zrzutów tabel
@@ -104,6 +123,14 @@ ALTER TABLE `authors`
 ALTER TABLE `songs`
   ADD PRIMARY KEY (`id`),
   ADD KEY `author_id` (`author_id`);
+
+--
+-- Indeksy dla tabeli `starts`
+--
+ALTER TABLE `starts`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `users-songs` (`user_login`,`song_id`),
+  ADD KEY `song_id` (`song_id`);
 
 --
 -- Indeksy dla tabeli `users`
@@ -130,6 +157,12 @@ ALTER TABLE `songs`
   MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
+-- AUTO_INCREMENT for table `starts`
+--
+ALTER TABLE `starts`
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
 -- Constraints for dumped tables
 --
 
@@ -138,6 +171,13 @@ ALTER TABLE `songs`
 --
 ALTER TABLE `songs`
   ADD CONSTRAINT `songs_ibfk_1` FOREIGN KEY (`author_id`) REFERENCES `authors` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `starts`
+--
+ALTER TABLE `starts`
+  ADD CONSTRAINT `starts_ibfk_1` FOREIGN KEY (`user_login`) REFERENCES `users` (`login`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `starts_ibfk_2` FOREIGN KEY (`song_id`) REFERENCES `songs` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

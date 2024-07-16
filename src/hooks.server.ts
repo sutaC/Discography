@@ -8,6 +8,7 @@ const authURLs: (string | RegExp)[] = [
 	'/profile/delete',
 	'/logout',
 	'/song/add',
+	'/song/stars',
 	'/author/add',
 	/\/song\/\d*\/edit/, // '/song/[id]/edit'
 	/\/author\/\d*\/edit/, // '/author/[id]/edit'

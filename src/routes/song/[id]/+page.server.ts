@@ -8,9 +8,14 @@ export const load: PageServerLoad = async (event) => {
 	const db = new Database();
 	await db.connect();
 	const song = await db.data.song.get(id);
+
+	if (!song) {
+		await db.disconnect();
+		error(404, { message: 'Not found' });
+	}
+
+	const stars = (await db.data.stars.countSongs(song.id)) ?? 0;
 	await db.disconnect();
 
-	if (!song) error(404, { message: 'Not found' });
-
-	return { song, permissions: event.locals.user?.permissions };
+	return { song, stars, permissions: event.locals.user?.permissions };
 };

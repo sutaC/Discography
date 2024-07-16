@@ -164,6 +164,27 @@ export default class Database {
 			delete: async (login: string): Promise<void> => {
 				await this.query<void>('DELETE FROM users WHERE users.login = ?;', [login]);
 			}
+		},
+		stars: {
+			add: async (login: string, songId: number): Promise<void> => {
+				await this.query<void>('INSERT INTO starts (id, user_login, song_id) VALUES (NULL, ?, ?)', [
+					login,
+					songId
+				]);
+			},
+			delete: async (login: string, songId: number): Promise<void> => {
+				await this.query<void>(
+					'DELETE FROM starts WHERE starts.user_login = ? AND starts.song_id = ?;',
+					[login, songId]
+				);
+			},
+			countSongs: async (songId: number): Promise<number | null> => {
+				const res = await this.query<{ count: number }>(
+					'SELECT COUNT(*) AS "count" FROM starts WHERE song_id = ?;',
+					[songId]
+				);
+				return res[0]?.count ?? null;
+			}
 		}
 	};
 }
