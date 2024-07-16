@@ -35,6 +35,8 @@ export const actions: Actions = {
 			lyrics: data.get('lyrics') as string
 		};
 
+		// TODO: validate input
+
 		const db = new Database();
 		await db.connect();
 		await db.data.song.update(song);

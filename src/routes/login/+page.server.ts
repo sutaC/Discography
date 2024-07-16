@@ -55,19 +55,14 @@ export const actions: Actions = {
 			repeatPassword: data.get('repeatPassword')?.toString()
 		};
 
-		if (!userData.login || !userData.password || !userData.repeatPassword)
-			error(400, { message: 'Missing data' });
-
+		const validationResult = validateUserData(userData as UserData);
+		if (!validationResult.success) error(400, { message: validationResult.message as string });
 		if (userData.password !== userData.repeatPassword)
 			error(400, { message: 'Password is not the same as repeat password' });
 
-		const validationResult = validateUserData(userData as UserData);
-		if (!validationResult.success) error(400, { message: validationResult.message as string });
-		// ---
-
 		const db = new Database();
 		await db.connect();
-		const hasUser = (await db.data.user.get(userData.login)) !== null;
+		const hasUser = (await db.data.user.get(userData.login as string)) !== null;
 
 		if (hasUser) {
 			await db.disconnect();
@@ -76,7 +71,7 @@ export const actions: Actions = {
 
 		const salt = generateSalt();
 		const user: User = {
-			login: userData.login,
+			login: userData.login as string,
 			salt,
 			password: await hash(userData.password + salt),
 			permissions: '',

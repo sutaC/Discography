@@ -30,22 +30,25 @@ function ValidationResultsObj(): ValidationResultObj {
 function parseValidationResult(vr: ValidationResultObj): ValidationResult {
 	return {
 		success: vr.success,
-		message: '| ' + vr.errors.map((vrerr) => `${vrerr.property} - ${vrerr.error}`).join('\n| ')
+		message: '| ' + vr.errors.map((vrerr) => `${vrerr.property} - ${vrerr.error}`).join(' | ')
 	};
 }
 
 // User data
 
 export interface UserData {
-	login: string;
-	password: string;
+	login?: string;
+	password?: string;
 }
 
 export function validateUserData(userData: UserData): ValidationResult {
 	const vr = ValidationResultsObj();
 
 	// Login
-	if (userData.login.length < 2) {
+	if (!userData.login) {
+		vr.success = false;
+		vr.errors.push(ValidationError('login', 'is missing'));
+	} else if (userData.login.length < 2) {
 		vr.success = false;
 		vr.errors.push(ValidationError('login', 'length should be min. 2 characters long'));
 	} else if (userData.login.length > 32) {
@@ -62,7 +65,10 @@ export function validateUserData(userData: UserData): ValidationResult {
 	}
 
 	// Password
-	if (userData.password.length < 8) {
+	if (!userData.password) {
+		vr.success = false;
+		vr.errors.push(ValidationError('password', 'is missing'));
+	} else if (userData.password.length < 8) {
 		vr.success = false;
 		vr.errors.push(ValidationError('password', 'length should be min. 2 characters long'));
 	} else if (userData.password.length > 32) {
