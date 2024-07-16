@@ -15,7 +15,13 @@ export const load: PageServerLoad = async (event) => {
 	}
 
 	const stars = (await db.data.stars.countSongs(song.id)) ?? 0;
+
+	let isStared = false;
+	if (event.locals.user) {
+		isStared = (await db.data.stars.get(event.locals.user.login, id)) !== null;
+	}
+
 	await db.disconnect();
 
-	return { song, stars, permissions: event.locals.user?.permissions };
+	return { song, stars, isStared, permissions: event.locals.user?.permissions };
 };

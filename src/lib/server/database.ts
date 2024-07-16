@@ -1,6 +1,6 @@
 import mysql from 'mysql2/promise';
 import { env } from '$env/dynamic/private';
-import type { Author, Song, SongTag, User } from '../types';
+import type { Author, Song, SongTag, Star, User } from '../types';
 
 export default class Database {
 	private readonly config = {
@@ -63,6 +63,12 @@ export default class Database {
 			getAll: async (): Promise<SongTag[]> => {
 				return await this.query<SongTag>(
 					'SELECT songs.id, songs.title, songs.author_id AS authorId, authors.name AS author FROM songs JOIN authors ON songs.author_id = authors.id;'
+				);
+			},
+			getAllStared: async (login: string): Promise<SongTag[]> => {
+				return await this.query<SongTag>(
+					'SELECT songs.id, songs.author_id AS "authorId", songs.title, authors.name AS "author" FROM songs JOIN authors ON songs.author_id = authors.id JOIN starts ON songs.id = starts.song_id WHERE starts.user_login = ?;',
+					[login]
 				);
 			},
 			getAllByAuthor: async (id: number): Promise<SongTag[]> => {
@@ -166,8 +172,16 @@ export default class Database {
 			}
 		},
 		stars: {
+			get: async (login: string, songId: number): Promise<Star | null> => {
+				const res = await this.query<Star>(
+					'SELECT starts.user_login AS "login", starts.song_id AS "songId" FROM starts WHERE user_login = ? AND song_id = ?;',
+					[login, songId]
+				);
+				return res[0] ?? null;
+			},
+
 			add: async (login: string, songId: number): Promise<void> => {
-				await this.query<void>('INSERT INTO starts (id, user_login, song_id) VALUES (NULL, ?, ?)', [
+				await this.query<void>('INSERT INTO starts (user_login, song_id) VALUES (?, ?)', [
 					login,
 					songId
 				]);

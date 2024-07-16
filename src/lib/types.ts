@@ -36,3 +36,8 @@ export interface PermissionsObject {
 	deleting: boolean; // Deleting content - (DEL)
 	updating: boolean; // Updating content - (UPD)
 }
+
+export interface Star {
+	login: string;
+	songId: number;
+}

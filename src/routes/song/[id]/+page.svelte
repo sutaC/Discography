@@ -30,7 +30,12 @@
 				<button on:click|preventDefault={handleDelete}>Delete</button>
 			{/if}
 			<button on:click|preventDefault={handlePrint}>Print</button>
-			<StartsCounter startsCount={data.stars} logedIn={!!data.permissions} songId={data.song.id} />
+			<StartsCounter
+				isStared={data.isStared}
+				startsCount={data.stars}
+				logedIn={!!data.permissions}
+				songId={data.song.id}
+			/>
 		</div>
 	</div>
 
