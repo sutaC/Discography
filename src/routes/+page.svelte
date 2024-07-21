@@ -40,7 +40,7 @@
 	<h2>Content</h2>
 
 	<section>
-		<h3>Songs</h3>
+		<h3>Popular songs</h3>
 		{#each data.songs as song}
 			<div class="tag">
 				<a href="/song/{song.id}">{song.title}</a>
@@ -48,15 +48,6 @@
 				<a href="/author/{song.authorId}">{song.author}</a>
 				- stars: {song.stars}
 			</div>
-		{/each}
-	</section>
-
-	<section>
-		<h3>Authors</h3>
-		{#each data.authors as author}
-			<a href="/author/{author.id}" class="tag">
-				{author.name}
-			</a>
 		{/each}
 	</section>
 </main>

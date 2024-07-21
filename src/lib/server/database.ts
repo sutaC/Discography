@@ -65,6 +65,11 @@ export default class Database {
 					'SELECT songs.id, songs.title, songs.author_id AS "authorId", authors.name AS "author", COUNT(stars.song_id) AS "stars" FROM songs JOIN authors ON songs.author_id = authors.id LEFT JOIN stars ON songs.id = stars.song_id GROUP BY songs.id;'
 				);
 			},
+			getPopular: async (): Promise<(SongTag & { stars: number })[]> => {
+				return await this.query<SongTag & { stars: number }>(
+					'SELECT songs.id, songs.title, songs.author_id AS "authorId", authors.name AS "author", COUNT(stars.song_id) AS "stars" FROM songs JOIN authors ON songs.author_id = authors.id LEFT JOIN stars ON songs.id = stars.song_id GROUP BY songs.id ORDER BY stars DESC LIMIT 5;'
+				);
+			},
 			getAllStaredByUser: async (login: string): Promise<(SongTag & { stars: number })[]> => {
 				return await this.query<SongTag & { stars: number }>(
 					'SELECT songs.id, songs.author_id AS "authorId", songs.title, authors.name AS "author", (SELECT COUNT(stars.user_login) FROM stars WHERE stars.song_id = songs.id) AS "stars" FROM songs JOIN authors ON songs.author_id = authors.id JOIN stars ON songs.id = stars.song_id WHERE stars.user_login = ?;',
