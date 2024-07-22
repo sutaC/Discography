@@ -9,11 +9,11 @@
 	<h2>Log in</h2>
 
 	<div class="field">
-		<label for="login">Login:</label>
+		<label for="login-login">Login:</label>
 		<input
 			type="text"
 			name="login"
-			id="login"
+			id="login-login"
 			placeholder="Login..."
 			autocomplete="username"
 			required
@@ -22,11 +22,11 @@
 		/>
 	</div>
 	<div class="field">
-		<label for="password">Password:</label>
+		<label for="login-password">Password:</label>
 		<input
 			type="password"
 			name="password"
-			id="password"
+			id="login-password"
 			placeholder="Password..."
 			autocomplete="current-password"
 			required
@@ -44,11 +44,11 @@
 	<h2>Register</h2>
 
 	<div class="field">
-		<label for="login">Login:</label>
+		<label for="register-login">Login:</label>
 		<input
 			type="text"
 			name="login"
-			id="login"
+			id="register-login"
 			placeholder="Login..."
 			autocomplete="username"
 			required
@@ -57,11 +57,11 @@
 		/>
 	</div>
 	<div class="field">
-		<label for="password">Password:</label>
+		<label for="register-password">Password:</label>
 		<input
 			type="password"
 			name="password"
-			id="password"
+			id="register-password"
 			placeholder="Password..."
 			autocomplete="new-password"
 			required
@@ -70,11 +70,11 @@
 		/>
 	</div>
 	<div class="field">
-		<label for="repeatPassword">Repeat password:</label>
+		<label for="register-repeatPassword">Repeat password:</label>
 		<input
 			type="password"
 			name="repeatPassword"
-			id="repeatPassword"
+			id="register-repeatPassword"
 			placeholder="Repeat password..."
 			autocomplete="new-password"
 			required

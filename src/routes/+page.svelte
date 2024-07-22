@@ -34,6 +34,9 @@
 		<a href="/song/add">Add Song</a>
 		<a href="/author/add">Add Author</a>
 	{/if}
+	{#if data.permissions?.granting}
+		<a href="/user">Manage users</a>
+	{/if}
 </nav>
 
 <main>

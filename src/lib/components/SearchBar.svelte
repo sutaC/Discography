@@ -9,7 +9,7 @@
 			songs = [];
 			return;
 		}
-		const res = await fetch(`/search/${slug}`);
+		const res = await fetch(`/search/${encodeURI(slug)}`);
 		const data = (await res.json()) as (SongTag & { stars: number })[];
 
 		if (!Array.isArray(data)) {

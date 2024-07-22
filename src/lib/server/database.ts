@@ -144,6 +144,12 @@ export default class Database {
 				const res = await this.query<User>('SELECT * FROM users WHERE users.login = ?;', [login]);
 				return res[0] ?? null;
 			},
+			updatePermissions: async (login: string, permissions: string): Promise<void> => {
+				await this.query<void>('UPDATE users SET permissions = ? WHERE users.login = ?', [
+					permissions,
+					login
+				]);
+			},
 			updateSession: async (login: string, session: string | null) => {
 				if (session === null) {
 					await this.query<void>('UPDATE users SET session = NULL WHERE users.login = ?;', [login]);
@@ -175,6 +181,12 @@ export default class Database {
 			},
 			delete: async (login: string): Promise<void> => {
 				await this.query<void>('DELETE FROM users WHERE users.login = ?;', [login]);
+			},
+			search: async (slug: string): Promise<{ login: string; permissions: string }[]> => {
+				return await this.query<{ login: string; permissions: string }>(
+					'SELECT users.login, users.permissions FROM users WHERE users.login LIKE CONCAT("%", ?, "%") LIMIT 5;',
+					[slug]
+				);
 			}
 		},
 		stars: {

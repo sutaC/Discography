@@ -27,8 +27,8 @@ export function stringifyPermissions(permissions: PermissionsObject): string {
 	let prm: string[] = [];
 	if (permissions.adding) prm.push('ADD');
 	if (permissions.deleting) prm.push('DEL');
-	if (permissions.granting) prm.push('UPD');
-	if (permissions.updating) prm.push('GRT');
+	if (permissions.granting) prm.push('GRT');
+	if (permissions.updating) prm.push('UPD');
 	return prm.join('|');
 }
 
