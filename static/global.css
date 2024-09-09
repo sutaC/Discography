@@ -1,0 +1,56 @@
+@import url('https://fonts.googleapis.com/css?family=Nova%20Square:700|Zen%20Kaku%20Gothic%20New:400');
+
+:root {
+	/* Colors */
+	--clr-text: hsl(225, 53%, 7%);
+	--clr-background: hsl(220, 60%, 99%);
+	--clr-primary: hsl(224, 54%, 52%);
+	--clr-secondary: hsl(222, 74%, 71%);
+	--clr-accent: hsl(247, 74%, 63%);
+
+	/* Gradients */
+	--grd-rad-secondary: radial-gradient(var(--clr-secondary), var(--clr-background));
+	--grd-lin-primary-secondary: linear-gradient(
+		to right bottom,
+		var(--clr-primary),
+		var(--clr-secondary)
+	);
+}
+
+body {
+	font-family: 'Zen Kaku Gothic New';
+	font-weight: 400;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5 {
+	font-family: 'Nova Square';
+	font-weight: 700;
+}
+
+h1 {
+	font-size: 2.489rem; /* 39.84px */
+}
+
+h2 {
+	font-size: 2.074rem; /* 33.12px */
+}
+
+h3 {
+	font-size: 1.728rem; /* 27.68px */
+}
+
+h4 {
+	font-size: 1.44rem; /* 23.04px */
+}
+
+h5 {
+	font-size: 1.2rem; /* 19.2px */
+}
+
+small {
+	font-size: 0.833rem; /* 13.28px */
+}
