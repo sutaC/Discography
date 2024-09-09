@@ -7,5 +7,5 @@ export const load: PageServerLoad = async (event) => {
 	const songs = await db.data.song.getPopular();
 	await db.disconnect();
 
-	return { songs, permissions: event.locals.user?.permissions };
+	return { songs };
 };

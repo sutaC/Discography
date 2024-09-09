@@ -6,9 +6,10 @@
 
 <div class="song">
 	<span class="top">
-		<a href="/song/{song.id}">{song.title}</a>
+		<a href="/song/{song.id}"><abbr title="Song">{song.title}</abbr></a>
 		-
-		<a href="/author/{song.authorId}">{song.author}</a>
+
+		<a href="/author/{song.authorId}"><abbr title="Author">{song.author}</abbr></a>
 	</span>
 	<small class="bottom">
 		Stars: {song.stars}
@@ -28,6 +29,10 @@
 
 	.song > * {
 		display: block;
+	}
+
+	abbr {
+		text-decoration: none;
 	}
 
 	a {

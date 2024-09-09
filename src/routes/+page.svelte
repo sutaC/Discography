@@ -24,22 +24,6 @@
 	</div>
 </header> -->
 
-<!-- <nav>
-	<h2>Menu</h2>
-	{#if !!data.permissions}
-		<a href="/profile">Profile</a>
-	{:else}
-		<a href="/login">Login</a>
-	{/if}
-	{#if data.permissions?.adding}
-		<a href="/song/add">Add Song</a>
-		<a href="/author/add">Add Author</a>
-	{/if}
-	{#if data.permissions?.granting}
-		<a href="/user">Manage users</a>
-	{/if}
-</nav> -->
-
 <main>
 	<h1>Trending Songs</h1>
 

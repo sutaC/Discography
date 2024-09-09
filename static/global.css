@@ -11,10 +11,6 @@
 		var(--clr-secondary),
 		color-mix(in hsl, var(--clr-secondary) 100%, var(--clr-background) 50%)
 	);
-	--grd-rad-accent: radial-gradient(
-		var(--clr-accent),
-		color-mix(in hsl, var(--clr-accent) 100%, var(--clr-accent) 50%)
-	);
 	--grd-lin-primary-secondary: linear-gradient(
 		to right bottom,
 		var(--clr-primary),
