@@ -1,12 +1,12 @@
 <header>
-	<div class="logoContainer">
+	<a class="logoContainer" href="/">
 		<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
 			<rect width="48" height="48" rx="24" fill="#090E1D" />
 			<rect x="15" y="15" width="18" height="18" rx="9" fill="#6B5BE6" />
 			<circle cx="24" cy="24" r="1" fill="#090E1D" />
 		</svg>
 		<span class="heading">Discography</span>
-	</div>
+	</a>
 
 	<div class="controls">
 		<button>
@@ -64,9 +64,16 @@
 		box-shadow: 0 0 0.5rem black;
 	}
 
-	header div {
+	.logoContainer {
+		all: unset;
+		cursor: pointer;
+	}
+
+	.logoContainer,
+	.controls {
 		display: flex;
 		align-items: center;
+		justify-content: center;
 		gap: 0.5rem;
 	}
 

@@ -1,5 +1,6 @@
 <script lang="ts">
 	import SearchBar from '$lib/components/SearchBar.svelte';
+	import Song from '$lib/components/Song.svelte';
 	import type { SongTag } from '$lib/types';
 	import type { PageData } from './$types';
 
@@ -7,7 +8,7 @@
 	let search: (SongTag & { stars: number })[] = [];
 </script>
 
-<header>
+<!-- <header>
 	<h1>Discography</h1>
 
 	<SearchBar bind:songs={search} />
@@ -21,9 +22,9 @@
 			</div>
 		{/each}
 	</div>
-</header>
+</header> -->
 
-<nav>
+<!-- <nav>
 	<h2>Menu</h2>
 	{#if !!data.permissions}
 		<a href="/profile">Profile</a>
@@ -37,58 +38,40 @@
 	{#if data.permissions?.granting}
 		<a href="/user">Manage users</a>
 	{/if}
-</nav>
+</nav> -->
 
 <main>
-	<h2>Content</h2>
+	<h1>Trending Songs</h1>
 
-	<section>
-		<h3>Popular songs</h3>
+	<div class="songs">
 		{#each data.songs as song}
-			<div class="tag">
-				<a href="/song/{song.id}">{song.title}</a>
-				-
-				<a href="/author/{song.authorId}">{song.author}</a>
-				- stars: {song.stars}
-			</div>
+			<Song {song} />
 		{/each}
-	</section>
+	</div>
 </main>
 
 <style>
-	header,
-	nav,
 	main {
 		text-align: center;
 	}
 
-	.searchRes {
-		margin: 1rem auto;
-		border: 1px solid #000;
-		width: 50%;
-		background-color: whitesmoke;
-		position: absolute;
-		left: 50%;
-		translate: -50%;
+	h1 {
+		font-size: 1.7rem;
 	}
 
-	.search {
-		border-bottom: 1px solid #000;
-		padding: 0.25rem;
+	.songs {
+		padding: 0 1rem;
 	}
 
-	.search:last-child {
-		border: none;
-	}
+	@media (width >= 1000px) {
+		.songs {
+			display: flex;
+			flex-wrap: wrap;
+			gap: 1rem;
+		}
 
-	.searchRes:empty {
-		display: none;
-	}
-
-	.tag {
-		display: block;
-		border: 1px solid #000;
-		padding: 0.5rem;
-		margin: 0.5rem 0;
+		.songs :global(> .song) {
+			flex: 30rem;
+		}
 	}
 </style>

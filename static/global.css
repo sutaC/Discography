@@ -7,8 +7,14 @@
 	--clr-accent: hsl(247, 74%, 63%);
 
 	/* Gradients */
-	--grd-rad-secondary: radial-gradient(var(--clr-secondary), var(--clr-background));
-	--grd-rad-accent: radial-gradient(var(--clr-accent), transparent);
+	--grd-rad-secondary: radial-gradient(
+		var(--clr-secondary),
+		color-mix(in hsl, var(--clr-secondary) 100%, var(--clr-background) 50%)
+	);
+	--grd-rad-accent: radial-gradient(
+		var(--clr-accent),
+		color-mix(in hsl, var(--clr-accent) 100%, var(--clr-accent) 50%)
+	);
 	--grd-lin-primary-secondary: linear-gradient(
 		to right bottom,
 		var(--clr-primary),
@@ -22,6 +28,7 @@
 
 body {
 	margin: 0;
+	min-height: 100vh;
 	font-family: 'Zen Kaku Gothic New', sans-serif;
 	font-weight: 400;
 	color: var(--clr-text);
