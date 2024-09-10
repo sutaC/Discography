@@ -32,4 +32,8 @@
 			0 0 0.5rem color-mix(in hsl, var(--clr-accent) 100%, var(--clr-background) 50%)
 		);
 	}
+
+	abbr {
+		text-decoration: none;
+	}
 </style>

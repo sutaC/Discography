@@ -1,5 +1,5 @@
 <script lang="ts">
-	import Song from '$lib/components/Song.svelte';
+	import SongsDisplay from '$lib/components/SongsDisplay.svelte';
 	import type { PageData } from './$types';
 	export let data: PageData;
 </script>
@@ -16,13 +16,9 @@
 
 	<small>Stared songs ({data.songs.length})</small>
 
-	<div class="songs">
-		{#each data.songs as song}
-			<Song {song} />
-		{:else}
-			<small>Looks empty... Maybe you should star some songs!</small>
-		{/each}
-	</div>
+	<SongsDisplay songs={data.songs}>
+		<small>Looks empty... Maybe you should star some songs!</small>
+	</SongsDisplay>
 </main>
 
 <style>
@@ -48,10 +44,6 @@
 
 	.highlight {
 		color: var(--clr-accent);
-	}
-
-	.songs {
-		padding: 0 1rem;
 	}
 
 	@media (width >= 800px) {
