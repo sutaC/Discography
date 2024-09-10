@@ -142,6 +142,17 @@
 
 	footer a {
 		color: inherit;
+		display: inline-block;
+		transition: all 150ms ease-out;
+	}
+
+	footer a:hover {
+		text-shadow: 0 2px 2px rgba(0, 0, 0, 0.25);
+		translate: 0 -2px;
+	}
+
+	footer a:active {
+		translate: 0;
 	}
 
 	aside {

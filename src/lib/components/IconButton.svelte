@@ -20,6 +20,7 @@
 	}
 
 	button:hover {
+		filter: drop-shadow(0 0.125rem 0.125rem rgba(0, 0, 0, 0.5));
 		translate: 0 -0.125rem;
 		opacity: 0.8;
 	}

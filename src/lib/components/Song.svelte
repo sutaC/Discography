@@ -43,7 +43,8 @@
 	}
 
 	a:hover {
-		translate: 0 -1px;
+		text-shadow: 0 2px 2px rgba(0, 0, 0, 0.25);
+		translate: 0 -2px;
 	}
 
 	a:active {
