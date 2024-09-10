@@ -6,10 +6,10 @@
 
 <div class="song">
 	<span class="top">
-		<a href="/song/{song.id}"><abbr title="Song">{song.title}</abbr></a>
+		<a href="/song/{song.id}" class="Link"><abbr title="Song">{song.title}</abbr></a>
 		-
 
-		<a href="/author/{song.authorId}"><abbr title="Author">{song.author}</abbr></a>
+		<a href="/author/{song.authorId}" class="Link"><abbr title="Author">{song.author}</abbr></a>
 	</span>
 	<small class="bottom">
 		Stars: {song.stars}
@@ -36,19 +36,7 @@
 	}
 
 	a {
-		all: unset;
-		cursor: pointer;
 		font-weight: bold;
-		transition: all 150ms ease-out;
-	}
-
-	a:hover {
-		text-shadow: 0 2px 2px rgba(0, 0, 0, 0.25);
-		translate: 0 -2px;
-	}
-
-	a:active {
-		translate: 0;
 	}
 
 	.top {

@@ -97,7 +97,12 @@
 
 <footer>
 	<small>
-		Made by <a href="https://github.com/sutaC" target="_blank" rel="noopener noreferrer">sutaC</a>
+		Made by <a
+			href="https://github.com/sutaC"
+			target="_blank"
+			rel="noopener noreferrer"
+			class="Link">sutaC</a
+		>
 	</small>
 </footer>
 
@@ -138,21 +143,6 @@
 		top: 100vh;
 		text-align: center;
 		background-color: var(--clr-primary);
-	}
-
-	footer a {
-		color: inherit;
-		display: inline-block;
-		transition: all 150ms ease-out;
-	}
-
-	footer a:hover {
-		text-shadow: 0 2px 2px rgba(0, 0, 0, 0.25);
-		translate: 0 -2px;
-	}
-
-	footer a:active {
-		translate: 0;
 	}
 
 	aside {
