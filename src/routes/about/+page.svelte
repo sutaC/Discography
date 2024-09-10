@@ -14,6 +14,7 @@
 		any artist you like!
 	</p>
 
+	<!-- TODO: DB count -->
 	<div class="stats">
 		<abbr title="Users" class="card">
 			<svg
