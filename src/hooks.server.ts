@@ -1,7 +1,7 @@
 import { parsePermissions, sessionCookie } from '$lib/server/authentication';
 import Database from '$lib/server/database';
 import type { User } from '$lib/types';
-import type { Handle } from '@sveltejs/kit';
+import { error, type Handle } from '@sveltejs/kit';
 
 const authURLs: (string | RegExp)[] = [
 	'/profile',
@@ -32,7 +32,7 @@ export const handle: Handle = async ({ event, resolve }) => {
 	}
 
 	const isAuthURL = authURLs.find((url) => event.url.pathname.match(url));
-	if (isAuthURL && !user) return new Response(null, { status: 401, statusText: 'Unauthorized' });
+	if (isAuthURL && !user) error(401, { message: 'Unauthorized' });
 
 	if (user)
 		event.locals.user = {
