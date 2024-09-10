@@ -1,28 +1,9 @@
 <script lang="ts">
-	import SearchBar from '$lib/components/SearchBar.svelte';
 	import Song from '$lib/components/Song.svelte';
-	import type { SongTag } from '$lib/types';
 	import type { PageData } from './$types';
 
 	export let data: PageData;
-	let search: (SongTag & { stars: number })[] = [];
 </script>
-
-<!-- <header>
-	<h1>Discography</h1>
-
-	<SearchBar bind:songs={search} />
-	<div class="searchRes">
-		{#each search as song}
-			<div class="search">
-				<a href="/song/{song.id}">{song.title}</a>
-				-
-				<a href="/author/{song.authorId}">{song.author}</a>
-				- stars: {song.stars}
-			</div>
-		{/each}
-	</div>
-</header> -->
 
 <main>
 	<h1>Trending Songs</h1>

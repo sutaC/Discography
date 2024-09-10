@@ -1,9 +1,11 @@
-<script>
+<script lang="ts">
 	import IconButton from '$lib/components/IconButton.svelte';
+	import SearchBar from '$lib/components/SearchBar.svelte';
 
 	export let data;
 
 	let menuOpen = false;
+	let searchBarOpen = false;
 
 	const handleToggleMenu = () => (menuOpen = !menuOpen);
 </script>
@@ -19,7 +21,7 @@
 	</a>
 
 	<div class="controls">
-		<IconButton tooltip="Search">
+		<IconButton tooltip="Search" on:click={() => (searchBarOpen = !searchBarOpen)}>
 			<svg
 				xmlns="http://www.w3.org/2000/svg"
 				width="24"
@@ -50,6 +52,8 @@
 		</IconButton>
 	</div>
 </header>
+
+<SearchBar bind:open={searchBarOpen} />
 
 <aside class:open={menuOpen}>
 	<nav>
@@ -87,7 +91,7 @@
 	</nav>
 </aside>
 
-<div class="backdrop"></div>
+<div class="backdrop" class:open={menuOpen || searchBarOpen}></div>
 
 <slot />
 
@@ -166,7 +170,7 @@
 		animation: slideIn 150ms ease-out;
 	}
 
-	aside.open + .backdrop {
+	.backdrop.open {
 		display: block;
 		position: fixed;
 		inset: 0;
