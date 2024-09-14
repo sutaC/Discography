@@ -108,6 +108,8 @@
 
 <style>
 	header {
+		position: sticky;
+		top: 0;
 		padding: 1rem;
 		margin-bottom: 1rem;
 		display: flex;
