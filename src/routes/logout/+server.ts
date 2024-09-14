@@ -2,10 +2,7 @@ import { sessionCookie } from '$lib/server/authentication';
 import Database from '$lib/server/database';
 import { error, redirect, type RequestHandler } from '@sveltejs/kit';
 
-// TODO: Fix - not logging out
 export const GET: RequestHandler = async (event) => {
-	console.log(event);
-
 	const { user } = event.locals;
 	if (!user) error(401, { message: 'Unauthorized' });
 

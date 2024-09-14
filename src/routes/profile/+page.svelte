@@ -8,7 +8,7 @@
 	<div class="hero">
 		<h1>Hello <span class="highlight">{data.login}</span>!</h1>
 		<nav>
-			<a href="/logout" rel="external" class="Link">Logout</a>
+			<a href="/logout" class="Link">Logout</a>
 			<a href="/profile/reset" class="Link">Reset Password</a>
 			<a href="/profile/delete" class="Link">Delete account</a>
 		</nav>
