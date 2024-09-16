@@ -48,6 +48,7 @@
 			</svg>
 		</IconButton>
 		<input
+			class="Input"
 			type="search"
 			name="search"
 			id="search"
@@ -115,12 +116,7 @@
 	}
 
 	input {
-		all: unset;
-		background-color: var(--clr-background);
-		border-radius: 1rem;
-		padding: 0.25rem 1rem;
-		font-size: 0.833rem;
-		width: 100%;
+		margin: unset;
 		max-width: 30rem;
 	}
 
