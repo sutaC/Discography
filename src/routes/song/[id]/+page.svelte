@@ -25,9 +25,9 @@
 
 <main>
 	<div class="heading">
-		<h1 class="print">
+		<h1 class="Print">
 			{data.song.title}
-			<a class="Link print author" href={`/author/${data.song.authorId}`}>{data.song.author}</a>
+			<a class="Link Print author" href={`/author/${data.song.authorId}`}>{data.song.author}</a>
 		</h1>
 
 		<div class="controls">
@@ -107,7 +107,7 @@
 		</div>
 	</div>
 
-	<div class="content">
+	<div class="Print content">
 		<pre class="lyrics">{data.song.lyrics}</pre>
 		<pre class="chords">{data.song.chords}</pre>
 	</div>
@@ -164,22 +164,21 @@
 	}
 
 	@media print {
-		/* Disabling non printable elements */
-		:global(body *) {
-			display: none;
-		}
-		.print,
-		.print * {
-			display: block;
+		:global(:is(header, footer)),
+		:is(.controls) {
+			display: none !important;
 		}
 
-		/* /---/ */
 		:global(body) {
 			padding: 5rem;
 		}
 
 		main {
 			margin: 2rem 0;
+		}
+
+		h1 {
+			margin-bottom: 2rem;
 		}
 	}
 </style>
