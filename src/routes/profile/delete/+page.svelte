@@ -1,46 +1,48 @@
-<header>
+<script>
+	import CustomButton from '$lib/components/CustomButton.svelte';
+
+	// TODO: Validation
+</script>
+
+<main>
 	<h1>Delete account</h1>
 	<p>Are you sure you want delete your account forever? It's a really long time!</p>
 
-	<nav>
-		<a href="/">Home</a>
-		<a href="/profile">Profile</a>
-	</nav>
-</header>
-
-<main>
 	<form action="/profile/delete" method="post">
 		<div class="field">
 			<label for="password">Password:</label>
-			<input type="password" name="password" id="password" />
+			<input class="Input" type="password" name="password" id="password" />
 		</div>
-		<div class="foot">
-			<button type="submit">Delete</button>
-		</div>
+		<CustomButton type="submit">Delete</CustomButton>
 	</form>
 </main>
 
 <style>
-	header {
+	main {
+		margin: auto;
+		padding: 1rem;
+		max-width: 50ch;
+	}
+
+	h1 {
 		text-align: center;
 	}
 
-	form {
-		margin: 1rem auto;
-		padding: 1rem;
-		border: 1px solid #000;
-		width: fit-content;
+	p {
+		display: block;
+		margin: auto;
 	}
 
 	.field {
-		margin: 1rem 0;
+		margin: 2rem 0;
+		display: flex;
 	}
 
-	.foot {
-		text-align: center;
+	input {
+		border: 1px solid var(--clr-text);
 	}
 
-	button {
-		text-align: center;
+	form :global(button) {
+		margin: auto;
 	}
 </style>

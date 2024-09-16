@@ -17,7 +17,7 @@
 	<small>Stared songs ({data.songs.length})</small>
 
 	<SongsDisplay songs={data.songs}>
-		<small>Looks empty... Maybe you should star some songs!</small>
+		<small class="emptyText">Looks empty... Maybe you should star some songs!</small>
 	</SongsDisplay>
 </main>
 
@@ -44,6 +44,11 @@
 
 	.highlight {
 		color: var(--clr-accent);
+	}
+
+	.emptyText {
+		margin: auto;
+		display: block;
 	}
 
 	@media (width >= 800px) {
