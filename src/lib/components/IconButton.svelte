@@ -1,8 +1,9 @@
 <script lang="ts">
 	export let tooltip = '';
+	export let disabled = false;
 </script>
 
-<button on:click>
+<button on:click {disabled}>
 	<abbr title={tooltip}>
 		<slot />
 	</abbr>
@@ -31,6 +32,12 @@
 		filter: drop-shadow(
 			0 0 0.5rem color-mix(in hsl, var(--clr-accent) 100%, var(--clr-background) 50%)
 		);
+	}
+
+	button:disabled:is(:hover, :active) {
+		translate: unset;
+		opacity: unset;
+		filter: unset;
 	}
 
 	abbr {
