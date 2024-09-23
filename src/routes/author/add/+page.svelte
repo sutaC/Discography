@@ -2,8 +2,18 @@
 	import AuthorForm from '$lib/components/AuthorForm.svelte';
 </script>
 
-<h1>Add Author</h1>
+<main>
+	<h1>Add Author</h1>
+	<AuthorForm method={'POST'} action={'/author/add'} />
+</main>
 
-<a href="/">Home</a>
+<style>
+	h1 {
+		text-align: center;
+		margin: 0;
+	}
 
-<AuthorForm method={'POST'} action={'/author/add'} />
+	main {
+		padding: 0 1rem;
+	}
+</style>

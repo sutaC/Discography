@@ -117,6 +117,7 @@
 		align-items: center;
 		background-color: var(--clr-primary);
 		box-shadow: 0 0 0.5rem black;
+		z-index: 100;
 	}
 
 	.logoContainer {
@@ -171,6 +172,7 @@
 		z-index: 100;
 		isolation: isolate;
 		animation: slideIn 150ms ease-out;
+		z-index: 102;
 	}
 
 	.backdrop.open {
@@ -180,7 +182,7 @@
 		height: 100vh;
 		width: 100vw;
 		background-color: hsla(0, 0%, 0%, 0.2);
-		z-index: 99;
+		z-index: 101;
 	}
 
 	nav .option {

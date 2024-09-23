@@ -4,9 +4,27 @@
 	export let data: PageData;
 </script>
 
-<a href="/">Home</a>
-<a href={`/author/${data.id}`}>Author</a>
+<main>
+	<h1>Edit author</h1>
+	<div class="linkContainer">
+		<a class="Link" href={`/author/${data.id}`}>Return</a>
+	</div>
+	<AuthorForm action={`/author/${data.id}/edit`} method={'post'} authorInit={data} />
+</main>
 
-<h1>Edit author</h1>
+<style>
+	h1 {
+		text-align: center;
+		margin: 0;
+	}
 
-<AuthorForm action={`/author/${data.id}/edit`} method={'post'} authorInit={data} />
+	.linkContainer {
+		display: flex;
+		justify-content: center;
+		align-self: start;
+	}
+
+	main {
+		padding: 0 1rem;
+	}
+</style>
