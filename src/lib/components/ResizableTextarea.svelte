@@ -6,12 +6,16 @@
 	export let rows: number = 5;
 	export let required: boolean = false;
 	export let placeholder: undefined | string | null = undefined;
+	export let connectValue: number = 0;
 	let textarea: HTMLTextAreaElement | undefined;
 
 	// Auto resize
-	$: if (textarea && value) {
-		const count = value.split('\n').length;
-		textarea.style.height = `${count + 1}em`;
+	$: if (value) {
+		connectValue = Math.max(value.split('\n').length, connectValue);
+	}
+
+	$: if (textarea) {
+		textarea.style.height = `${connectValue + 1}em`;
 	}
 </script>
 
@@ -21,8 +25,10 @@
 <style>
 	textarea {
 		all: unset;
+		box-sizing: border-box;
 		resize: none;
 		overflow: hidden;
+		margin-top: 0.25rem;
 		border: 1px solid var(--clr-text);
 		min-height: calc(16px * 10);
 		background-color: var(--clr-background);

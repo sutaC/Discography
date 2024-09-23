@@ -100,8 +100,7 @@
 		width: 100vw;
 		left: 0;
 		top: 0;
-		isolation: isolate;
-		z-index: 100;
+		z-index: 102;
 		box-shadow: 0 0 0.5rem rgba(0, 0, 0, 0.25);
 	}
 

@@ -75,9 +75,7 @@
 	}
 
 	.field.long {
-		gap: 0.25rem;
 		flex-direction: column;
-		isolation: isolate;
 	}
 
 	.controls {
@@ -85,7 +83,6 @@
 	}
 
 	.controls :global(button) {
-		text-align: right;
 		display: inline-block;
 		margin: 0 0.5rem;
 	}
