@@ -123,6 +123,8 @@
 	.formContainer {
 		margin: auto;
 		max-width: 30rem;
+		box-shadow: 0 0.25rem 0.2rem rgba(0, 0, 0, 0.2);
+		border-radius: 1rem;
 	}
 
 	.tabs {
