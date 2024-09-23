@@ -1,49 +1,63 @@
 <script lang="ts">
+	import SongsDisplay from '$lib/components/SongsDisplay.svelte';
 	import type { PageData } from './$types';
 	export let data: PageData;
 </script>
 
-<header>
-	<h1>Hello {data.login}!</h1>
-	<nav>
-		<a href="/">Home</a>
-		<a href="/profile/delete">Delete account</a>
-	</nav>
-	<form action="/logout" method="post"><button type="submit">Logout</button></form>
-</header>
-
 <main>
-	<h2>Stared songs</h2>
-
-	<div class="songs">
-		{#each data.songs as song}
-			<div class="tag">
-				<a href="/song/{song.id}">{song.title}</a>
-				-
-				<a href="/author/{song.authorId}">{song.author}</a>
-				- stars: {song.stars}
-			</div>
-		{:else}
-			<p>Looks empty... Maybe you should star some songs!</p>
-		{/each}
+	<div class="hero">
+		<h1>Hello <span class="highlight">{data.login}</span>!</h1>
+		<nav>
+			<a href="/logout" class="Link">Logout</a>
+			<a href="/profile/reset" class="Link">Reset Password</a>
+			<a href="/profile/delete" class="Link">Delete account</a>
+		</nav>
 	</div>
+
+	<small>Stared songs ({data.songs.length})</small>
+
+	<SongsDisplay songs={data.songs}>
+		<small class="emptyText">Looks empty... Maybe you should star some songs!</small>
+	</SongsDisplay>
 </main>
 
 <style>
-	header,
 	main {
 		text-align: center;
 	}
 
-	form {
-		margin: 1rem 0;
+	.hero {
+		text-align: left;
+		padding: 1rem;
+		background-color: var(--clr-secondary);
+		translate: 0 -1rem;
+		box-shadow: inset 0 0.125rem 0.125rem rgba(0, 0, 0, 0.25);
 	}
 
-	.tag {
+	h1 {
+		margin: 0 0 2rem;
+	}
+
+	.hero a {
+		margin-right: 1rem;
+	}
+
+	.highlight {
+		color: var(--clr-accent);
+	}
+
+	.emptyText {
+		margin: auto;
 		display: block;
-		border: 1px solid #000;
-		padding: 0.5rem;
-		width: 50%;
-		margin: 0.5rem auto;
+	}
+
+	@media (width >= 800px) {
+		.hero {
+			text-align: center;
+		}
+
+		.hero a {
+			margin: 0 1rem;
+		}
 	}
 </style>

@@ -1,0 +1,108 @@
+:root {
+	/* Colors */
+	--clr-text: hsl(225, 53%, 7%);
+	--clr-background: hsl(220, 60%, 99%);
+	--clr-primary: hsl(224, 54%, 52%);
+	--clr-secondary: hsl(222, 74%, 71%);
+	--clr-accent: hsl(247, 74%, 63%);
+
+	/* Gradients */
+	--grd-rad-secondary: radial-gradient(
+		var(--clr-secondary),
+		color-mix(in hsl, var(--clr-secondary) 100%, var(--clr-background) 50%)
+	);
+	--grd-lin-primary-secondary: linear-gradient(
+		to right bottom,
+		var(--clr-primary),
+		var(--clr-secondary)
+	);
+}
+
+* {
+	box-sizing: border-box;
+}
+
+body {
+	margin: 0;
+	min-height: 100vh;
+	font-family: 'Zen Kaku Gothic New', sans-serif;
+	font-weight: 400;
+	color: var(--clr-text);
+	background-color: var(--clr-background);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5 {
+	font-family: 'Nova Square', sans-serif;
+	font-weight: 700;
+}
+
+h1 {
+	font-size: 2.489rem; /* 39.84px */
+}
+
+h2 {
+	font-size: 2.074rem; /* 33.12px */
+}
+
+h3 {
+	font-size: 1.728rem; /* 27.68px */
+}
+
+h4 {
+	font-size: 1.44rem; /* 23.04px */
+}
+
+h5 {
+	font-size: 1.2rem; /* 19.2px */
+}
+
+small {
+	font-size: 0.833rem; /* 13.28px */
+}
+
+/* Utility classes */
+
+a.Link {
+	color: inherit;
+	display: inline-block;
+	transition:
+		text-shadow 150ms ease-out,
+		translate 150ms ease-out;
+}
+
+a.Link:hover {
+	text-shadow: 0 2px 2px rgba(0, 0, 0, 0.25);
+	translate: 0 -2px;
+}
+
+a.Link:active {
+	translate: 0;
+}
+
+input.Input {
+	all: unset;
+	width: 100%;
+	background-color: var(--clr-background);
+	padding: 0.25rem 0.5rem;
+	border-radius: 1rem;
+	box-shadow: inset 0 0.2rem 0.2rem hsla(0, 0%, 0%, 0.2);
+	font-size: 0.833rem;
+	margin-inline-start: 0.5rem;
+	transition: all 150ms ease-out;
+}
+
+input.Input:hover {
+	translate: 0 -2px;
+	box-shadow:
+		inset 0 0.2rem 0.2rem hsla(0, 0%, 0%, 0.2),
+		0 0.2rem 0.2rem hsla(0, 0%, 0%, 0.2);
+}
+
+input.Input:active {
+	translate: 0;
+	box-shadow: inset 0 0.2rem 0.2rem hsla(0, 0%, 0%, 0.2);
+}

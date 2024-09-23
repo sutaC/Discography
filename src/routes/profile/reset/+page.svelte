@@ -1,19 +1,22 @@
 <script>
 	import CustomButton from '$lib/components/CustomButton.svelte';
 
-	// TODO: Validation
+	// TODO: implement password reset
 </script>
 
 <main>
-	<h1>Delete account</h1>
-	<p>Are you sure you want delete your account forever? It's a really long time!</p>
+	<h1>Reset password</h1>
 
-	<form action="/profile/delete" method="post">
+	<form action="/profile/reset" method="post">
 		<div class="field">
 			<label for="password">Password:</label>
 			<input class="Input" type="password" name="password" id="password" />
 		</div>
-		<CustomButton type="submit">Delete</CustomButton>
+		<div class="field">
+			<label for="reset-password">Reset password:</label>
+			<input class="Input" type="password" name="reset-password" id="reset-password" />
+		</div>
+		<CustomButton type="submit">Reset</CustomButton>
 	</form>
 </main>
 
@@ -26,11 +29,6 @@
 
 	h1 {
 		text-align: center;
-	}
-
-	p {
-		display: block;
-		margin: auto;
 	}
 
 	.field {

@@ -4,8 +4,18 @@
 	export let data: PageData;
 </script>
 
-<h1>Add Song</h1>
+<main>
+	<h1>Add Song</h1>
+	<SongForm method={'POST'} action={'/song/add'} authors={data.authors} />
+</main>
 
-<a href="/">Home</a>
+<style>
+	h1 {
+		text-align: center;
+		margin: 0;
+	}
 
-<SongForm method={'POST'} action={'/song/add'} authors={data.authors} />
+	main {
+		padding: 0 1rem;
+	}
+</style>

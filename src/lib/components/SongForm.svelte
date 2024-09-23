@@ -1,5 +1,6 @@
 <script lang="ts">
 	import type { Author, Song } from '$lib/types';
+	import CustomButton from './CustomButton.svelte';
 	import ResizableTextarea from './ResizableTextarea.svelte';
 
 	export let authors: Author[];
@@ -20,12 +21,15 @@
 	const handleReset = () => {
 		song = { ...songInit };
 	};
+
+	let txSize = 0;
 </script>
 
 <form {method} {action}>
 	<div class="field">
 		<label for="title">Title:</label>
 		<input
+			class="Input"
 			type="text"
 			name="title"
 			id="title"
@@ -33,19 +37,31 @@
 			required
 			minlength="2"
 			maxlength="256"
+			placeholder="Title..."
 		/>
 	</div>
 
 	<div class="field">
 		<label for="author">Author:</label>
-		<select name="author" id="author" placeholder="Name..." value={song.authorId} required>
+		<!-- TODO: ADD author selection by typing -->
+		<input
+			class="Input"
+			type="text"
+			name="author"
+			id="author"
+			placeholder="Author..."
+			required
+			minlength="2"
+			maxlength="256"
+		/>
+		<!-- <select name="author" id="author" placeholder="Name..." value={song.authorId} required>
 			{#each authors as author}
 				<option value={author.id}>{author.name}</option>
 			{/each}
-		</select>
+		</select> -->
 	</div>
 
-	<div class="main">
+	<div class="contents">
 		<div class="txField">
 			<label for="lyrics">Lyrics:</label>
 			<ResizableTextarea
@@ -54,6 +70,7 @@
 				cols={60}
 				rows={20}
 				required={true}
+				bind:connectValue={txSize}
 				bind:value={song.lyrics}
 			/>
 		</div>
@@ -65,27 +82,39 @@
 				cols={20}
 				rows={20}
 				required={true}
+				bind:connectValue={txSize}
 				bind:value={song.chords}
 			/>
 		</div>
 	</div>
 
-	<button type="reset" on:click|preventDefault={handleReset}>Reset</button>
-	<button type="submit">Submit</button>
+	<div class="controls">
+		<CustomButton type="reset" on:click={handleReset}>Reset</CustomButton>
+		<CustomButton type="submit" on:click={handleReset}>Submit</CustomButton>
+	</div>
 </form>
 
 <style>
 	form {
-		padding: 0.5rem;
-		margin: 0.5rem;
-		border: 1px solid #000;
+		padding: 2rem 0;
+		max-width: 40rem;
+		margin: auto;
+	}
+
+	form > div {
+		margin-bottom: 2rem;
 	}
 
 	.field {
-		margin: 0.5rem 0;
+		display: flex;
 	}
 
-	.main {
+	.field input {
+		width: 100%;
+		border: 1px solid var(--clr-text);
+	}
+
+	.contents {
 		display: flex;
 		align-items: start;
 		gap: 0.5rem;
@@ -96,7 +125,16 @@
 		flex-direction: column;
 	}
 
-	button {
-		margin: 0.5rem 0;
+	.txField :global(textarea) {
+		width: 100%;
+	}
+
+	.controls {
+		text-align: right;
+	}
+
+	.controls :global(button) {
+		display: inline-block;
+		margin: 0 0.5rem;
 	}
 </style>
