@@ -46,7 +46,18 @@
 </script>
 
 <div class="scrollControls" class:scrolling={scrollId !== null}>
-	<input type="range" aria-label="Speed" min="1" max="10" step="1" bind:value={speed} />
+	<div class="range">
+		<label for="speedRange">Speed: </label>
+		<input
+			type="range"
+			aria-label="Speed"
+			id="speedRange"
+			min="1"
+			max="10"
+			step="1"
+			bind:value={speed}
+		/>
+	</div>
 
 	<IconButton tooltip="Scroll" on:click={handleScroll}>
 		{#if isScrolling}
@@ -96,8 +107,10 @@
 		display: flex;
 		justify-content: center;
 		align-items: center;
+		gap: 1rem;
 		z-index: 50;
 		padding: 0.75rem 1rem 0.5rem;
 		background-color: var(--clr-secondary);
+		accent-color: var(--clr-primary);
 	}
 </style>
