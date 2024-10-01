@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { browser } from '$app/environment';
+	import { onMount } from 'svelte';
 	import IconButton from './IconButton.svelte';
 
 	export let isScrolling = false;
@@ -7,6 +8,23 @@
 
 	let scrollId: number | null = null;
 	let speed = 5;
+
+	onMount(() => {
+		speed = Number(localStorage.getItem('scroll-speed') ?? 5);
+		if (speed < 1 || speed > 10) {
+			console.error(`Saved speed was out of range <1, 10> - given ${speed} - now set to 5`);
+			speed = 5;
+		}
+	});
+
+	$: ((speed) => {
+		if (!browser) return;
+		if (speed < 1 || speed > 10) {
+			console.error(`Saved speed was out of range <1, 10> - given ${speed} - now set to 5`);
+			speed = 5;
+		}
+		localStorage.setItem('scroll-speed', String(speed));
+	})(speed);
 
 	const isAtBottom = () =>
 		document.documentElement.clientHeight + window.scrollY >=
