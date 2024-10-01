@@ -2,9 +2,13 @@
 	import { browser } from '$app/environment';
 	import { goto } from '$app/navigation';
 	import IconButton from '$lib/components/IconButton.svelte';
+	import ScrollingControls from '$lib/components/ScrollingControls.svelte';
 	import StartsCounter from '$lib/components/StartsCounter.svelte';
 	import type { PageData } from './$types';
 	export let data: PageData;
+
+	let scrollControls: ScrollingControls;
+	let isScrolling = false;
 
 	const handleDelete = async () => {
 		if (!data.permissions?.deleting) return;
@@ -16,10 +20,6 @@
 
 	const handlePrint = () => {
 		if (browser) window.print();
-	};
-
-	const handleScroll = () => {
-		// TODO: Inplement scroll
 	};
 </script>
 
@@ -73,20 +73,38 @@
 						</svg>
 					</IconButton>
 				{/if}
-				<IconButton tooltip="Scroll" on:click={handleScroll}>
-					<svg
-						xmlns="http://www.w3.org/2000/svg"
-						width="24"
-						height="24"
-						fill="currentColor"
-						class="bi bi-play-circle"
-						viewBox="0 0 16 16"
-					>
-						<path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16" />
-						<path
-							d="M6.271 5.055a.5.5 0 0 1 .52.038l3.5 2.5a.5.5 0 0 1 0 .814l-3.5 2.5A.5.5 0 0 1 6 10.5v-5a.5.5 0 0 1 .271-.445"
-						/>
-					</svg>
+				<IconButton tooltip="Scroll" on:click={scrollControls.handleScroll}>
+					{#if isScrolling}
+						<!-- Pause icon -->
+						<svg
+							xmlns="http://www.w3.org/2000/svg"
+							width="24"
+							height="24"
+							fill="currentColor"
+							class="bi bi-pause-circle"
+							viewBox="0 0 16 16"
+						>
+							<path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16" />
+							<path
+								d="M5 6.25a1.25 1.25 0 1 1 2.5 0v3.5a1.25 1.25 0 1 1-2.5 0zm3.5 0a1.25 1.25 0 1 1 2.5 0v3.5a1.25 1.25 0 1 1-2.5 0z"
+							/>
+						</svg>
+					{:else}
+						<!-- Play icon -->
+						<svg
+							xmlns="http://www.w3.org/2000/svg"
+							width="24"
+							height="24"
+							fill="currentColor"
+							class="bi bi-play-circle"
+							viewBox="0 0 16 16"
+						>
+							<path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16" />
+							<path
+								d="M6.271 5.055a.5.5 0 0 1 .52.038l3.5 2.5a.5.5 0 0 1 0 .814l-3.5 2.5A.5.5 0 0 1 6 10.5v-5a.5.5 0 0 1 .271-.445"
+							/>
+						</svg>
+					{/if}
 				</IconButton>
 				<IconButton tooltip="Print" on:click={handlePrint}>
 					<svg
@@ -111,6 +129,8 @@
 		<pre class="lyrics">{data.song.lyrics}</pre>
 		<pre class="chords">{data.song.chords}</pre>
 	</div>
+
+	<ScrollingControls bind:isScrolling bind:this={scrollControls} />
 </main>
 
 <style>
